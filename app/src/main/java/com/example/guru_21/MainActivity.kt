@@ -31,5 +31,27 @@ class MainActivity : AppCompatActivity() {
             var intent = Intent(this, loginActivity::class.java)
             startActivity(intent)
         }
+        //회원가입 창으로 이동하는 코드
+        signupButton.setOnClickListener{
+            var intent = Intent(this, signupActivity::class.java)
+            startActivity(intent)
+        }
+        //마이페이지 창으로 이동하는 코드
+        mypageButton.setOnClickListener{
+            var intent = Intent(this, mypageActivity::class.java)
+            startActivity(intent)
+        }
+        //코스 살펴보기 창으로 이동하는 코드
+        watchCourseButton.setOnClickListener{
+            var intent = Intent(this, watchCourseActivity::class.java)
+            startActivity(intent)
+        }
+        //코스 만들기 창으로 이동하는 코드
+        makeCourseButton.setOnClickListener{
+            var intent = Intent(this, makeCourseActivity::class.java)
+            startActivity(intent)
+        }
+
+
         }
 }
