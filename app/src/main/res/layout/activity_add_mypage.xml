@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="bottom|center"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".addMypageActivity">
+
+    <EditText
+        android:id="@+id/diary_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:hint="제목" />
+
+    <EditText
+        android:id="@+id/diary_content"
+        android:layout_width="match_parent"
+        android:layout_height="441dp"
+        android:gravity="start"
+        android:hint="내용을 입력하세요"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/save_diary_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="save" />
+
+
+</LinearLayout>
