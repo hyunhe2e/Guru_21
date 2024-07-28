@@ -34,6 +34,12 @@
             android:name=".loginActivity"
             android:exported="false" />
         <activity
+            android:name=".addMyCourseActivity"
+            android:exported="true"/>
+
+        <activity android:name=".myPlaceInfoActiviry"
+            android:exported="false"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

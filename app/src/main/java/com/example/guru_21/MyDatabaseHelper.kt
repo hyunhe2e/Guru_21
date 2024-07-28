@@ -13,6 +13,7 @@ class MyDatabaseHelper(
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL("CREATE TABLE travel_diary(title text, content text)")
+        db.execSQL("CREATE TABLE  mycourse(placename text, placecost INTEGER, placecomment text)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
