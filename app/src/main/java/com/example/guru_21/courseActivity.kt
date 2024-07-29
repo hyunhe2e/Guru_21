@@ -1,8 +1,12 @@
 package com.example.guru_21
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import com.bumptech.glide.Glide
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -72,6 +76,11 @@ class courseActivity : AppCompatActivity() {
                     .addOnSuccessListener { response: FetchPlaceResponse ->
                         val place = response.place
                         Log.i("PlaceDetails", "Place found: ${place.name}, Address: ${place.address}, Phone: ${place.phoneNumber}")
+
+                        binding.edtgoogleplacename.setText(place.name)
+                        binding.edtgoogleplaceaddress.setText(place.address)
+                        binding.edtgoogleplacenumber.setText(place.phoneNumber)
+
                     }
                     .addOnFailureListener { exception: Exception ->
                         if (exception is ApiException) {
@@ -91,5 +100,32 @@ class courseActivity : AppCompatActivity() {
                 Log.e("PlaceSelection", "An error occurred: $status")
             }
         })
+
+        // 사진 버튼 이벤트
+        binding.btnpicture.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            activityResult.launch(intent)
+        }
+
+        binding.btninit.setOnClickListener {
+
+        }
+
+    }
+
+    // 갤러리 사진 가져오기
+    private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) {
+
+        // 결과 OK
+        if(it.resultCode == RESULT_OK && it.data != null) {
+            val uri = it.data!!.data
+
+            Glide.with(this)
+                .load(uri)
+                .into(binding.imagepicture)
+        }
+
     }
 }

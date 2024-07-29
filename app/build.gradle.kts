@@ -58,9 +58,10 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.play.services.maps)
-    implementation("com.google.android.gms:play-services-maps:19.0.0")
+    implementation("com.google.android.gms:play-services-maps:19.0.0")  // 구글 place API
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:$kotlinVersion")) // 변수 사용
-    implementation("com.google.android.libraries.places:places:3.5.0")
+    implementation("com.google.android.libraries.places:places:3.5.0") // 구글 place API
+    implementation ("com.github.bumptech.glide:glide:4.16.0") // 이미지뷰로 사진 가져오는 라이브러리
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

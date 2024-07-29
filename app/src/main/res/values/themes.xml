@@ -6,4 +6,13 @@
     </style>
 
     <style name="Theme.Guru_21" parent="Base.Theme.Guru_21" />
+
+    <style name="Theme.Guru_21.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Guru_21.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Guru_21.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
