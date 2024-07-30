@@ -3,6 +3,7 @@
     <style name="Base.Theme.Guru_21" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/lightcoral</item>
     </style>
 
     <style name="Theme.Guru_21" parent="Base.Theme.Guru_21" />
@@ -15,4 +16,5 @@
     <style name="Theme.Guru_21.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Guru_21.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

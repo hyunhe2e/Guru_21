@@ -2,4 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="lightsalmon">#F9D3CA</color>
+    <color name="lightcoral">#F08080</color>
 </resources>
