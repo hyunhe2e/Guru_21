@@ -14,7 +14,9 @@ class MyDatabaseHelper(
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL("CREATE TABLE travel_diary(title text, content text)")
-        db.execSQL("CREATE TABLE  mycourse(placename text, placecost INTEGER, placecomment text)")
+
+        //addMyCourse, makeCourse, mypageInfo
+        db.execSQL("CREATE TABLE  mycourse(placename text, placeaddress text, placecall text)")
 
         // 정현 course 사용
         db.execSQL("CREATE TABLE User (" + "user_id varchar(20) PRIMARY KEY, " + "pwd varchar(20));");

@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="이름" />
+                android:text="장소 이름" />
 
             <EditText
                 android:id="@+id/edtPlaceName"
@@ -38,15 +38,16 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/placeCost"
+                android:id="@+id/placeAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:width="56dp"
                 android:gravity="center"
-                android:text="비용" />
+                android:text="주소" />
 
             <EditText
-                android:id="@+id/edtPlaceCost"
+                android:id="@+id/edtPlaceAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -60,15 +61,16 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/placeComment"
+                android:id="@+id/placeCall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:width="56dp"
                 android:gravity="center"
-                android:text="메모" />
+                android:text="번호" />
 
             <EditText
-                android:id="@+id/edtPlaceComment"
+                android:id="@+id/edtPlaceCall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -76,12 +78,28 @@
                 android:inputType="text" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnAddMyplace"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="추가하기" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnAddMyplace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="110dp"
+                android:gravity="center"
+                android:text="추가하기" />
+
+            <Button
+                android:id="@+id/btnfind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="찾아보기" />
+
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>
