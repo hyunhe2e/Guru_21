@@ -39,7 +39,7 @@ class makeCourseActivity : AppCompatActivity() {
 
         var cursor: Cursor
 
-        cursor = sqlitedb.rawQuery("SELECT * FROM mycourse;", null)
+        cursor = sqlitedb.rawQuery("SELECT placename, placeaddress, placecall, placecost, placecomment FROM mycourse;", null)
 
         var num: Int = 0
 

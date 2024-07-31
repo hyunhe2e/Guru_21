@@ -47,7 +47,7 @@ class addMyCourseActivity : AppCompatActivity() {
 
 
             sqlitedb = dbManager.writableDatabase
-            sqlitedb.execSQL("INSERT INTO mycourse VALUES ('"+str_placename+"', '"+str_placeaddress+"', '"+str_placecall+"', '"+str_placecost+"', '"+str_placecomment+"');")
+            sqlitedb.execSQL("INSERT INTO mycourse(placename, placeaddress, placecall, placecost, placecomment) VALUES ('"+str_placename+"', '"+str_placeaddress+"', '"+str_placecall+"', '"+str_placecost+"', '"+str_placecomment+"');")
             sqlitedb.close()
 
             val intent = Intent(this, makeCourseActivity::class.java)

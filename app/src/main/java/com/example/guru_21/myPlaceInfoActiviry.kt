@@ -48,7 +48,7 @@ class myPlaceInfoActiviry:AppCompatActivity() {
         sqlitedb = dbManager.readableDatabase
 
         var cursor: Cursor
-        cursor = sqlitedb.rawQuery("SELECT * FROM mycourse WHERE placename = '"+str_placename+"';", null)
+        cursor = sqlitedb.rawQuery("SELECT placename, placeaddress, placecall, placecost, placecomment FROM mycourse WHERE placename = '"+str_placename+"';", null)
 
         if(cursor.moveToNext()) {
             str_placeaddress = cursor.getString(cursor.getColumnIndex("placeaddress")).toString()

@@ -16,7 +16,7 @@ class MyDatabaseHelper(
         db.execSQL("CREATE TABLE travel_diary(title text, content text)")
 
         //addMyCourse, makeCourse, mypageInfo
-        db.execSQL("CREATE TABLE  mycourse(placename text, placeaddress text, placecall text, placecost INTEGER, placecomment text)")
+        db.execSQL("CREATE TABLE  mycourse(userID text PRIMARY KEY, courseID text, placename text, placeaddress text, placecall text, placecost INTEGER, placecomment text, review text)")
 
         // 정현 course 사용
         db.execSQL("CREATE TABLE User (" + "user_id varchar(20) PRIMARY KEY, " + "pwd varchar(20));");
