@@ -36,6 +36,17 @@ class addMyCourseActivity : AppCompatActivity() {
         edtPlaceComment = findViewById(R.id.edtPlaceComment)
 
 
+        //구글정보가져오기
+        val ReceiveName = intent.getStringExtra("SendName")
+        val ReceiveAddr = intent.getStringExtra("SendAddr")
+        val ReceiveNum = intent.getStringExtra("SendNum")
+        edtPlaceName.setText(ReceiveName)
+        edtPlaceAddress.setText(ReceiveAddr)
+        edtPlaceCall.setText(ReceiveNum)
+
+
+
+
         dbManager = MyDatabaseHelper(this, "myCourseDB", null, 1)
 
         btnAddMyplace.setOnClickListener {

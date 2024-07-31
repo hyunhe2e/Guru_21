@@ -34,12 +34,16 @@ class courseActivity : AppCompatActivity() {
     lateinit var sqlitedb: SQLiteDatabase
 
     private lateinit var binding: ActivityCourseBinding
+    lateinit var btnGoaddMyCourse: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityCourseBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        btnGoaddMyCourse=findViewById(R.id.btnGoaddMyCourse)
 
         val dbManager = MyDatabaseHelper(this, "CourseDB", null, 1)
 
@@ -49,6 +53,7 @@ class courseActivity : AppCompatActivity() {
         val edtPlaceCost = binding.edtgoogleplacecost
         val edtPlaceMemo = binding.edtgoogleplacememo
         val btnInit = binding.btninit
+
 
         // 구글 장소검색자동완성 api
         // Define a variable to hold the Places API key.
@@ -130,8 +135,8 @@ class courseActivity : AppCompatActivity() {
         // 저장 버튼
         btnInit.setOnClickListener {
 
-            val placeName = edtPlaceName.text.toString()
             val placeAddress = edtPlaceAddress.text.toString()
+            val placeName = edtPlaceName.text.toString()
             val placeNumber = edtPlaceNumber.text.toString()
             val placeCost = edtPlaceCost.text.toString()
             val placeMemo = edtPlaceMemo.text.toString()
@@ -144,6 +149,19 @@ class courseActivity : AppCompatActivity() {
 
         }
 
+        // 가져오기 버튼
+        btnGoaddMyCourse.setOnClickListener{
+
+            val placeAddress = edtPlaceAddress.text.toString()
+            val placeName = edtPlaceName.text.toString()
+            val placeNumber = edtPlaceNumber.text.toString()
+
+            val intent = Intent(this, addMyCourseActivity::class.java)
+                intent.putExtra("SendName",placeName)
+                intent.putExtra("SendAddr",placeAddress)
+                intent.putExtra("SendNum", placeNumber)
+            startActivity(intent)
+        }
     }
 
     // 갤러리 사진 가져오기
@@ -160,4 +178,5 @@ class courseActivity : AppCompatActivity() {
         }
 
     }
+
 }
