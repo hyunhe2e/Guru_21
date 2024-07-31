@@ -1,9 +1,12 @@
 package com.example.guru_21
 
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.EditText
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
@@ -27,15 +30,27 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 
 class courseActivity : AppCompatActivity() {
 
+    lateinit var dbManager: MyDatabaseHelper
+    lateinit var sqlitedb: SQLiteDatabase
+
     private lateinit var binding: ActivityCourseBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Initialize ViewBinding
         binding = ActivityCourseBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val dbManager = MyDatabaseHelper(this, "CourseDB", null, 1)
+
+        val edtPlaceName = binding.edtgoogleplacename
+        val edtPlaceAddress = binding.edtgoogleplaceaddress
+        val edtPlaceNumber = binding.edtgoogleplacenumber
+        val edtPlaceCost = binding.edtgoogleplacecost
+        val edtPlaceMemo = binding.edtgoogleplacememo
+        val btnInit = binding.btninit
+
+        // 구글 장소검색자동완성 api
         // Define a variable to hold the Places API key.
         val apiKey = BuildConfig.PLACES_API_KEY
 
@@ -109,6 +124,23 @@ class courseActivity : AppCompatActivity() {
         }
 
         binding.btninit.setOnClickListener {
+
+        }
+
+        // 저장 버튼
+        btnInit.setOnClickListener {
+
+            val placeName = edtPlaceName.text.toString()
+            val placeAddress = edtPlaceAddress.text.toString()
+            val placeNumber = edtPlaceNumber.text.toString()
+            val placeCost = edtPlaceCost.text.toString()
+            val placeMemo = edtPlaceMemo.text.toString()
+
+            sqlitedb = dbManager.writableDatabase
+            val sql = "INSERT INTO Course (place_name, place_addr, place_num, place_cost, memo) VALUES (" +
+                    "'$placeName', '$placeAddress', '$placeNumber', $placeCost, '$placeMemo');"
+            sqlitedb.execSQL(sql)
+            sqlitedb.close()
 
         }
 
