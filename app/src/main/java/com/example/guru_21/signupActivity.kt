@@ -11,11 +11,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.guru_21.loginActivity.MyDatabaseHelper
+import com.example.guru_21.MyDatabaseHelper
 
 class signupActivity : AppCompatActivity() {
 
-    lateinit var edtname: EditText
+    lateinit var editname: EditText
     lateinit var editemail: EditText
     lateinit var editpwd: EditText
     lateinit var editpwdcheck: EditText
@@ -28,7 +28,7 @@ class signupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
-        edtname = findViewById(R.id.edtname)
+        editname = findViewById(R.id.editname)
         editemail = findViewById(R.id.editemail)
         editpwd = findViewById(R.id.editpwd)
         editpwdcheck = findViewById(R.id.editpwdcheck)
@@ -40,12 +40,19 @@ class signupActivity : AppCompatActivity() {
         btn1.setOnClickListener {
             try {
                 sqlDB = dbManager.writableDatabase
-                val name = edtname.text.toString()
+                val name = editname.text.toString()
                 val pwd = editpwd.text.toString()
+                val pwd2 = editpwdcheck.text.toString()
 
-                if (name.isNotBlank() && pwd.isNotBlank()) {
-                    sqlDB.execSQL("INSERT INTO member (tryName, trytext) VALUES ('$name', '$pwd');")
-                    Toast.makeText(applicationContext, "로그인 시도", Toast.LENGTH_SHORT).show()
+                if (name.isNotBlank() && pwd.isNotBlank() && pwd2.isNotBlank()) {
+                    if(pwd == pwd2) {
+                        sqlDB.execSQL("INSERT INTO member (tryName, trytext) VALUES ('$name', '$pwd');")
+                        Toast.makeText(applicationContext, "로그인 시도", Toast.LENGTH_SHORT).show()
+                    }
+                    else {
+                        Toast.makeText(applicationContext, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 } else {
                     Toast.makeText(applicationContext, "아이디와 비밀번호를 입력하세요.", Toast.LENGTH_SHORT)
                         .show()

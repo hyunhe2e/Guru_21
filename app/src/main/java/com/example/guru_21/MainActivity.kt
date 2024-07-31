@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         //코스 살펴보기 창으로 이동하는 코드
         watchCourseButton.setOnClickListener{
-            var intent = Intent(this, watchCourseActivity::class.java)
+            var intent = Intent(this, coursepageActivity::class.java)
             startActivity(intent)
         }
         //코스 만들기 창으로 이동하는 코드
