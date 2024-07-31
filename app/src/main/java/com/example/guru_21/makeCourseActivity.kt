@@ -47,6 +47,8 @@ class makeCourseActivity : AppCompatActivity() {
             var str_placename = cursor.getString(cursor.getColumnIndex("placename")).toString()
             var str_placeaddress = cursor.getString(cursor.getColumnIndex("placeaddress")).toString()
             var str_placecall = cursor.getString(cursor.getColumnIndex("placecall")).toString()
+            var str_placecost = cursor.getString(cursor.getColumnIndex("placecost")).toString()
+            var str_placecomment = cursor.getString(cursor.getColumnIndex("placecomment")).toString()
 
             var layout_item: LinearLayout = LinearLayout(this)
             layout_item.orientation = LinearLayout.VERTICAL
@@ -68,6 +70,14 @@ class makeCourseActivity : AppCompatActivity() {
             var tvplaceCall: TextView=TextView(this)
             tvplaceCall.text=str_placecall
             layout_item.addView(tvplaceCall)
+
+            var tvplaceCost: TextView=TextView(this)
+            tvplaceCost.text=str_placecost
+            layout_item.addView(tvplaceCost)
+
+            var tvplaceComment: TextView=TextView(this)
+            tvplaceComment.text=str_placecomment
+            layout_item.addView(tvplaceComment)
 
             layout_item.setOnClickListener {
                 val intent = Intent(this, myPlaceInfoActiviry::class.java)

@@ -19,10 +19,14 @@ class myPlaceInfoActiviry:AppCompatActivity() {
     lateinit var tvmyplaceName: TextView
     lateinit var tvmyplaceAddress: TextView
     lateinit var tvmyplaceCall: TextView
+    lateinit var tvmyplaceCost: TextView
+    lateinit var tvmyplaceComment: TextView
 
     lateinit var str_placename: String
     lateinit var str_placeaddress: String
     lateinit var str_placecall: String
+    var placecost: Int = 0
+    lateinit var str_placecomment: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +37,8 @@ class myPlaceInfoActiviry:AppCompatActivity() {
         tvmyplaceName = findViewById(R.id.edtplacename)
         tvmyplaceAddress = findViewById(R.id.edtplaceaddress)
         tvmyplaceCall = findViewById(R.id.edtplacecall)
+        tvmyplaceCost = findViewById(R.id.edtplacecost)
+        tvmyplaceComment = findViewById(R.id.edtplacecomment)
 
 
         val intent = intent
@@ -47,6 +53,8 @@ class myPlaceInfoActiviry:AppCompatActivity() {
         if(cursor.moveToNext()) {
             str_placeaddress = cursor.getString(cursor.getColumnIndex("placeaddress")).toString()
             str_placecall = cursor.getString(cursor.getColumnIndex("placecall")).toString()
+            placecost = cursor.getInt(cursor.getColumnIndex("placecost"))
+            str_placecomment = cursor.getString(cursor.getColumnIndex("placecomment")).toString()
         }
 
         cursor.close()
@@ -55,7 +63,9 @@ class myPlaceInfoActiviry:AppCompatActivity() {
 
         tvmyplaceName.text=str_placename
         tvmyplaceAddress.text=str_placeaddress
-        tvmyplaceCall.text=str_placecall+"\n"
+        tvmyplaceCall.text=str_placecall
+        tvmyplaceCost.text=""+placecost
+        tvmyplaceComment.text=str_placecomment+"\n"
     }
 
 
