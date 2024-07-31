@@ -26,6 +26,12 @@ class MyDatabaseHelper(
                 "user_id INTEGER, " + "place_name VARCHAR(30), " + "place_addr VARCHAR(255), " + "place_num VARCHAR(20), " +
                 "place_cost INTEGER, " + "memo TEXT, " + "FOREIGN KEY (post_id) REFERENCES Post(id), " +
                 "FOREIGN KEY (user_id) REFERENCES User(id));");
+
+        //보현 로그인 관련
+        db.execSQL("CREATE TABLE Member (" +
+                "NAME CHAR(20) PRIMARY KEY, " +
+                "PWD VARCHAR(15), " +
+                "EMAIL VARCHAR(30));")
     }
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
 
