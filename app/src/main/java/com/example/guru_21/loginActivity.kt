@@ -1,6 +1,7 @@
 package com.example.guru_21
 
 import android.content.Context
+import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.os.Bundle
@@ -31,24 +32,40 @@ class loginActivity : AppCompatActivity() {
 
         dbManager = MyDatabaseHelper(this, "MyDatabase.db", null, 1)
 
-        //입력 코드
+        //조회 코드
         btn1.setOnClickListener {
+            var state: Boolean = false
+
             try {
-                sqlDB = dbManager.writableDatabase
                 val name = editname.text.toString()
                 val pwd = editpwd.text.toString()
 
                 if (name.isNotBlank() && pwd.isNotBlank()) {
-                    sqlDB.execSQL("INSERT INTO Member (tryName, trytext) VALUES ('$name', '$pwd');")
-                    Toast.makeText(applicationContext, "로그인 시도", Toast.LENGTH_SHORT).show()
+                    // 데이터베이스에서 name과 pwd가 일치하는 레코드가 있는지 확인
+                    val cursor = sqlDB.rawQuery(
+                        "SELECT * FROM member WHERE NAME = ? AND PWD = ?",
+                        arrayOf(name, pwd)
+                    )
+                    if (cursor.moveToFirst()) {
+                        // 로그인 성공
+                        state = true
+                        Toast.makeText(applicationContext, "로그인 성공", Toast.LENGTH_SHORT).show()
+                    } else {
+                        // 로그인 실패
+                        Toast.makeText(applicationContext, "아이디 또는 비밀번호가 잘못되었습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                    cursor.close()
                 } else {
-                    Toast.makeText(applicationContext, "아이디와 비밀번호를 입력하세요.", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(applicationContext, "아이디와 비밀번호를 모두 입력해주세요.", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Toast.makeText(applicationContext, "오류 발생: ${e.message}", Toast.LENGTH_SHORT).show()
             } finally {
                 sqlDB.close()
+                if(state == true) {
+                    var intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
     }

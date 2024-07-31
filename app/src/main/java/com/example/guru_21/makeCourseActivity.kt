@@ -80,7 +80,7 @@ class makeCourseActivity : AppCompatActivity() {
             layout_item.addView(tvplaceComment)
 
             layout_item.setOnClickListener {
-                val intent = Intent(this, myPlaceInfoActiviry::class.java)
+                val intent = Intent(this, myPlaceInfoActivity::class.java)
                 intent.putExtra("intent_name", str_placename)
                 startActivity(intent)
             }

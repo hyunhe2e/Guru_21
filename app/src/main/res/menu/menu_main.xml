@@ -4,11 +4,14 @@
 
     <item
         android:id="@+id/login"
-        android:title="@string/login" />
+        android:title="@string/login"
+        android:fontFamily="@font/tfont"/>
     <item
         android:id="@+id/signup"
-        android:title="@string/signup" />
+        android:title="@string/signup"
+        android:fontFamily="@font/tfont"/>
     <item
         android:id="@+id/mypage"
-        android:title="@string/mypage"/>
+        android:title="@string/mypage"
+        android:fontFamily="@font/tfont"/>
 </menu>
