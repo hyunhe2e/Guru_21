@@ -19,8 +19,9 @@ class MyDatabaseHelper(
         db.execSQL("CREATE TABLE  mycourse(userID text PRIMARY KEY, courseID text, placename text, placeaddress text, placecall text, placecost INTEGER, placecomment text, review text)")
 
         // course_page
-        db.execSQL("CREATE TABLE all_course(postID int PRIMARY KEY, userID CHAR(20), " +
+        db.execSQL("CREATE TABLE all_course(postID int PRIMARY KEY, userID text, title text, content text, " +
                 "FOREIGN KEY(userID) REFERENCES Member(NAME))")
+
 
         //보현 로그인 관련
         db.execSQL("CREATE TABLE Member (" +
