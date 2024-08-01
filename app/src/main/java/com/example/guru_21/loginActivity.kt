@@ -30,7 +30,7 @@ class loginActivity : AppCompatActivity() {
         editpwd = findViewById(R.id.editpwd)
         btn1 = findViewById(R.id.btn1)
 
-        dbManager = MyDatabaseHelper(this, "MyDatabase.db", null, 1)
+        dbManager = MyDatabaseHelper(this, "tripDB.db", null, 1)
 
         //조회 코드
         btn1.setOnClickListener {

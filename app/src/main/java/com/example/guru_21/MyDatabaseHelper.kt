@@ -23,7 +23,7 @@ class MyDatabaseHelper(
                 "FOREIGN KEY(userID) REFERENCES Member(NAME))")
 
 
-        //보현 로그인 관련
+        //로그인 관련
         db.execSQL("CREATE TABLE Member (" +
                 "NAME CHAR(20) PRIMARY KEY, " +
                 "PWD VARCHAR(15), " +

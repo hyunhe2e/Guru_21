@@ -34,7 +34,7 @@ class signupActivity : AppCompatActivity() {
         editpwdcheck = findViewById(R.id.editpwdcheck)
         btn1 = findViewById(R.id.btn1)
 
-        dbManager = MyDatabaseHelper(this, "MyDatabase.db", null, 1)
+        dbManager = MyDatabaseHelper(this, "tripDB.db", null, 1)
 
         //입력 코드
         btn1.setOnClickListener {
