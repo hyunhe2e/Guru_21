@@ -25,7 +25,7 @@ class makeCourseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_make_course)
 
-        dbManager = MyDatabaseHelper(this, "myCourseDB", null, 1)
+        dbManager = MyDatabaseHelper(this, "tripDB", null, 1)
         sqlitedb = dbManager.readableDatabase
 
         layout = findViewById(R.id.myCourse)
@@ -71,7 +71,7 @@ class makeCourseActivity : AppCompatActivity() {
 
 
             var tvplaceAddress: TextView =TextView(this)
-            tvplaceAddress.text = str_placeaddress.toString()
+            tvplaceAddress.text = str_placeaddress
             layout_item.addView(tvplaceAddress)
 
             var tvplaceCall: TextView=TextView(this)
@@ -87,7 +87,7 @@ class makeCourseActivity : AppCompatActivity() {
             layout_item.addView(tvplaceComment)
 
             layout_item.setOnClickListener {
-                val intent = Intent(this, myPlaceInfoActivity::class.java)
+                var intent = Intent(this, myPlaceInfoActivity::class.java)
                 intent.putExtra("intent_name", str_placename)
                 startActivity(intent)
             }

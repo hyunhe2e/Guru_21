@@ -40,10 +40,10 @@ class myPlaceInfoActivity:AppCompatActivity() {
         tvmyplaceComment = findViewById(R.id.edtplacecomment)
 
 
-        val intent = intent
+        var intent = intent
         str_placename = intent.getStringExtra("intent_name").toString()
 
-        dbManager = MyDatabaseHelper(this, "myCourseDB", null, 1)
+        dbManager = MyDatabaseHelper(this, "tripDB", null, 1)
         sqlitedb = dbManager.readableDatabase
 
         var cursor: Cursor
@@ -83,7 +83,7 @@ class myPlaceInfoActivity:AppCompatActivity() {
             }
 
             R.id.deletemyplace -> {
-                dbManager = MyDatabaseHelper(this, "myCourseDB", null, 1)
+                dbManager = MyDatabaseHelper(this, "tripDB", null, 1)
                 sqlitedb = dbManager.readableDatabase
                 sqlitedb.execSQL("DELETE FROM mycourse WHERE placename = '"+str_placename+"';")
                 sqlitedb.close()
