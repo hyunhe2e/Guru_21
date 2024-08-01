@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class detailMypageActivity : AppCompatActivity() {
+    //후기창 화면 코드로 변경
     lateinit var dbHelper: MyDatabaseHelper
     lateinit var sqlitedb: SQLiteDatabase
 
@@ -33,13 +34,13 @@ class detailMypageActivity : AppCompatActivity() {
         diary_title = findViewById(R.id.diary_detail_title)
         diary_content = findViewById(R.id.diary_detail_content)
 
-        dbHelper = MyDatabaseHelper(this, "travel_diary", null, 1)
+        dbHelper = MyDatabaseHelper(this, "review", null, 1)
 
         val title = intent.getStringExtra("intent_name")
         if (title != null) {
             sqlitedb = dbHelper.readableDatabase
             val cursor: Cursor =
-                sqlitedb.rawQuery("SELECT * FROM travel_diary WHERE title = '$title'", null)
+                sqlitedb.rawQuery("SELECT * FROM review WHERE title = '$title'", null)
 
             if (cursor.moveToFirst()) {
                 val content = cursor.getString(cursor.getColumnIndexOrThrow("content"))
@@ -61,10 +62,10 @@ class detailMypageActivity : AppCompatActivity() {
     private fun deleteDiary(title: String?) {
         if (title != null) {
             sqlitedb = dbHelper.writableDatabase
-            sqlitedb.delete("travel_diary", "title = ?", arrayOf(title))
+            sqlitedb.delete("review", "title = ?", arrayOf(title))
             sqlitedb.close()
 
-            val intent = Intent(this, mypageActivity::class.java)
+            val intent = Intent(this, myPlaceInfoActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
             finish()

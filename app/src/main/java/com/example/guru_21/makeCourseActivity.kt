@@ -21,6 +21,9 @@ class makeCourseActivity : AppCompatActivity() {
     lateinit var btnGoaddMyCourse: Button
     lateinit var btnUpload: Button
 
+    //후기 목록 버튼
+    lateinit var watch_review_button: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_make_course)
@@ -32,6 +35,8 @@ class makeCourseActivity : AppCompatActivity() {
         btnGoaddMyCourse=findViewById<Button>(R.id.btnGoaddMycourse)
         btnUpload=findViewById<Button>(R.id.btnUpload)
 
+        watch_review_button = findViewById<Button>(R.id.watch_review_button)
+
         //추가하기 버튼
         btnGoaddMyCourse.setOnClickListener{
             var intent = Intent(this, addMyCourseActivity::class.java)
@@ -41,6 +46,12 @@ class makeCourseActivity : AppCompatActivity() {
         // 업로드 버튼
         btnUpload.setOnClickListener{
             var intent = Intent(this, coursepageActivity::class.java)
+            startActivity(intent)
+        }
+
+        // watch_review_button 클릭 시 후기 목록창으로 이동
+        watch_review_button.setOnClickListener {
+            val intent = Intent(this, reviewActivity::class.java)
             startActivity(intent)
         }
 

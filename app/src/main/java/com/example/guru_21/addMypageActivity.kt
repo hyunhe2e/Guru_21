@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class addMypageActivity : AppCompatActivity() {
+    //후기 작성 코드로 변경
     lateinit var dbHelper: MyDatabaseHelper
     lateinit var sqlitedb: SQLiteDatabase
 
@@ -33,21 +34,23 @@ class addMypageActivity : AppCompatActivity() {
         diary_content= findViewById(R.id.diary_content)
         save_diary_button = findViewById(R.id.save_diary_button)
 
-        dbHelper= MyDatabaseHelper(this, "travel_diary",null,1)
+        dbHelper= MyDatabaseHelper(this, "review",null,1)
+
+        // Intent로 전달된 placename을 받아서 diary_title에 설정
+        val placename = intent.getStringExtra("placename")
+        if (placename != null) {
+            diary_title.setText(placename)
+        }
 
         save_diary_button.setOnClickListener {
             var title = diary_title.text.toString()
             var content = diary_content.text.toString()
 
-            if (title.isEmpty()) {
-                Toast.makeText(this, "제목을 작성하세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
             sqlitedb=dbHelper.writableDatabase
-            sqlitedb.execSQL("INSERT INTO travel_diary VALUES ('"+title+"','"+content+ "')")
+            sqlitedb.execSQL("INSERT INTO review VALUES ('$title', '$content')")
             sqlitedb.close()
 
-            val intent = Intent(this, mypageActivity::class.java)
+            val intent = Intent(this, myPlaceInfoActivity::class.java)
 
             startActivity(intent)
             finish()

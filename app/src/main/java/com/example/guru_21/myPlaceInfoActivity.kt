@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -26,6 +27,7 @@ class myPlaceInfoActivity:AppCompatActivity() {
     lateinit var str_placecall: String
     var placecost: Int = 0
     lateinit var str_placecomment: String
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,6 +67,15 @@ class myPlaceInfoActivity:AppCompatActivity() {
         tvmyplaceCall.text=str_placecall
         tvmyplaceCost.text=""+placecost
         tvmyplaceComment.text=str_placecomment+"\n"
+
+        // 장소 이름 클릭 시 후기 작성 창으로 이동
+        tvmyplaceName.setOnClickListener {
+            val intent = Intent(this, addMypageActivity::class.java)
+            intent.putExtra("placename", str_placename)
+            startActivity(intent)
+        }
+
+
     }
 
 
