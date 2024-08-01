@@ -7,8 +7,14 @@ import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.example.guru_21.databinding.ActivityAddMycourseBinding
+import com.example.guru_21.databinding.ActivityCourseBinding
 
 
 class addMyCourseActivity : AppCompatActivity() {
@@ -21,11 +27,15 @@ class addMyCourseActivity : AppCompatActivity() {
     lateinit var edtPlaceCall: EditText
     lateinit var edtPlaceCost: EditText
     lateinit var edtPlaceComment: EditText
+    private lateinit var binding: ActivityAddMycourseBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_mycourse)
+
+        binding = ActivityAddMycourseBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         btnAddMyplace = findViewById(R.id.btnAddMyplace)
         btnfind = findViewById(R.id.btnfind)
@@ -47,7 +57,7 @@ class addMyCourseActivity : AppCompatActivity() {
 
 
 
-        dbManager = MyDatabaseHelper(this, "myCourseDB", null, 1)
+        dbManager = MyDatabaseHelper(this, "tripDB", null, 1)
 
         btnAddMyplace.setOnClickListener {
             var str_placename: String = edtPlaceName.text.toString()
@@ -69,6 +79,34 @@ class addMyCourseActivity : AppCompatActivity() {
         btnfind.setOnClickListener{
             var intent = Intent(this, courseActivity::class.java)
             startActivity(intent)
+        }
+
+
+
+        // 사진 버튼 이벤트
+        binding.Btnpicture.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            activityResult.launch(intent)
+        }
+
+
+
+    }
+
+
+
+    // 갤러리 사진 가져오기
+    private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) {
+
+        // 결과 OK
+        if(it.resultCode == RESULT_OK && it.data != null) {
+            val uri = it.data!!.data
+
+            Glide.with(this)
+                .load(uri)
+                .into(binding.Imagepicture)
         }
 
     }

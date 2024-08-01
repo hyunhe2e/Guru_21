@@ -50,9 +50,6 @@ class courseActivity : AppCompatActivity() {
         val edtPlaceName = binding.edtgoogleplacename
         val edtPlaceAddress = binding.edtgoogleplaceaddress
         val edtPlaceNumber = binding.edtgoogleplacenumber
-        val edtPlaceCost = binding.edtgoogleplacecost
-        val edtPlaceMemo = binding.edtgoogleplacememo
-        val btnInit = binding.btninit
 
 
         // 구글 장소검색자동완성 api
@@ -121,33 +118,23 @@ class courseActivity : AppCompatActivity() {
             }
         })
 
-        // 사진 버튼 이벤트
-        binding.btnpicture.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            activityResult.launch(intent)
-        }
 
-        binding.btninit.setOnClickListener {
 
-        }
-
-        // 저장 버튼
-        btnInit.setOnClickListener {
-
-            val placeAddress = edtPlaceAddress.text.toString()
-            val placeName = edtPlaceName.text.toString()
-            val placeNumber = edtPlaceNumber.text.toString()
-            val placeCost = edtPlaceCost.text.toString()
-            val placeMemo = edtPlaceMemo.text.toString()
-
-            sqlitedb = dbManager.writableDatabase
-            val sql = "INSERT INTO Course (place_name, place_addr, place_num, place_cost, memo) VALUES (" +
-                    "'$placeName', '$placeAddress', '$placeNumber', $placeCost, '$placeMemo');"
-            sqlitedb.execSQL(sql)
-            sqlitedb.close()
-
-        }
+//        // 저장 버튼
+//        btnInit.setOnClickListener {
+//
+//            val placeAddress = edtPlaceAddress.text.toString()
+//            val placeName = edtPlaceName.text.toString()
+//            val placeNumber = edtPlaceNumber.text.toString()
+//
+//
+//            sqlitedb = dbManager.writableDatabase
+//            val sql = "INSERT INTO Course (place_name, place_addr, place_num) VALUES (" +
+//                    "'$placeName', '$placeAddress', '$placeNumber');"
+//            sqlitedb.execSQL(sql)
+//            sqlitedb.close()
+//
+//        }
 
         // 가져오기 버튼
         btnGoaddMyCourse.setOnClickListener{
@@ -157,26 +144,13 @@ class courseActivity : AppCompatActivity() {
             val placeNumber = edtPlaceNumber.text.toString()
 
             val intent = Intent(this, addMyCourseActivity::class.java)
-                intent.putExtra("SendName",placeName)
-                intent.putExtra("SendAddr",placeAddress)
+                intent.putExtra("SendName", placeName)
+                intent.putExtra("SendAddr", placeAddress)
                 intent.putExtra("SendNum", placeNumber)
             startActivity(intent)
         }
     }
 
-    // 갤러리 사진 가져오기
-    private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()) {
 
-        // 결과 OK
-        if(it.resultCode == RESULT_OK && it.data != null) {
-            val uri = it.data!!.data
-
-            Glide.with(this)
-                .load(uri)
-                .into(binding.imagepicture)
-        }
-
-    }
 
 }
