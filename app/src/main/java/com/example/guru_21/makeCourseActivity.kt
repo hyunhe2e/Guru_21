@@ -19,21 +19,28 @@ class makeCourseActivity : AppCompatActivity() {
     lateinit var layout: LinearLayout
 
     lateinit var btnGoaddMyCourse: Button
+    lateinit var btnUpload: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_make_course)
-
 
         dbManager = MyDatabaseHelper(this, "myCourseDB", null, 1)
         sqlitedb = dbManager.readableDatabase
 
         layout = findViewById(R.id.myCourse)
         btnGoaddMyCourse=findViewById<Button>(R.id.btnGoaddMycourse)
+        btnUpload=findViewById<Button>(R.id.btnUpload)
 
         //추가하기 버튼
         btnGoaddMyCourse.setOnClickListener{
             var intent = Intent(this, addMyCourseActivity::class.java)
+            startActivity(intent)
+        }
+
+        // 업로드 버튼
+        btnUpload.setOnClickListener{
+            var intent = Intent(this, coursepageActivity::class.java)
             startActivity(intent)
         }
 
@@ -99,6 +106,7 @@ class makeCourseActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_make_course, menu)
         return true
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item?.itemId){
