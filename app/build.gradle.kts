@@ -52,6 +52,9 @@ android {
 val kotlinVersion = "1.8.10" // Kotlin 버전 정의
 
 dependencies {
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5") // API
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5") // Implementation
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5") // Jackson parser
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -61,7 +64,10 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:19.0.0")  // 구글 place API
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:$kotlinVersion")) // 변수 사용
     implementation("com.google.android.libraries.places:places:3.5.0") // 구글 place API
-    implementation ("com.github.bumptech.glide:glide:4.16.0") // 이미지뷰로 사진 가져오는 라이브러리
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.androidx.annotation)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx) // 이미지뷰로 사진 가져오는 라이브러리
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

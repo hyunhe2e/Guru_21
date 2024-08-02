@@ -49,7 +49,7 @@ class signupActivity : AppCompatActivity() {
 
                 if (name.isNotBlank() && pwd.isNotBlank() && pwd2.isNotBlank() && email.isNotEmpty()) {
                     if(pwd == pwd2){
-                        sqlDB.execSQL("INSERT INTO Member (NAME, PWD, EMAIL) VALUES ('$name', '$pwd', '$email');")
+                        sqlDB.execSQL("INSERT INTO Member (userID, PWD, EMAIL) VALUES ('$name', '$pwd', '$email');")
                         Toast.makeText(applicationContext, "회원가입 성공", Toast.LENGTH_SHORT).show()
                         state = true
                     }
