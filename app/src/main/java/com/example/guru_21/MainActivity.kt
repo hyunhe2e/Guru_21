@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var watchCourseButton: Button
     lateinit var makeCourseButton: Button
+    lateinit var logout: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         watchCourseButton = findViewById<Button>(R.id.watchCourseButton)
         makeCourseButton = findViewById<Button>(R.id.makeCourseButton)
+        logout = findViewById<Button>(R.id.logout)
 
         //코스 살펴보기 창으로 이동하는 코드
         watchCourseButton.setOnClickListener{
@@ -32,6 +34,20 @@ class MainActivity : AppCompatActivity() {
         makeCourseButton.setOnClickListener{
             var intent = Intent(this, makeCourseActivity::class.java)
             startActivity(intent)
+        }
+        //로그아웃 코드
+        logout.setOnClickListener {
+            // 사용자 세션 또는 저장된 데이터 삭제
+            val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
+            val editor = sharedPref.edit()
+            editor.clear()
+            editor.apply()
+
+            // 로그인 화면으로 리다이렉트
+            val intent = Intent(this, loginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
         }
 
 
