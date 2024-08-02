@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:textSize="20sp" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -119,6 +120,17 @@
             android:layout_weight="5"
             android:textSize="20sp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/review_prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="420dp"
+        android:paddingStart="10dp"
+        android:text="장소를 눌러 후기를 작성해보세요!"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp" />
 
 
 </LinearLayout>
