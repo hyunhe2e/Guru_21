@@ -24,13 +24,13 @@ class MyDatabaseHelper(
                 + "FOREIGN KEY(userID) REFERENCES Member(NAME))")
 
         // course_page
-        db.execSQL("CREATE TABLE all_course(userID int PRIMARY KEY, userID text, title text, content text, " +
+        db.execSQL("CREATE TABLE all_course(userID text PRIMARY KEY, title text, content text, " +
                 "FOREIGN KEY(userID) REFERENCES Member(NAME))")
 
 
         //회원관리
         db.execSQL("CREATE TABLE Member (" +
-                "userID CHAR(20) PRIMARY KEY, " +
+                "userID text PRIMARY KEY, " +
                 "PWD VARCHAR(15), " +
                 "EMAIL VARCHAR(30));")
     }

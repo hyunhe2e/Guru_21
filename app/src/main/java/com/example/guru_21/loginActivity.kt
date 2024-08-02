@@ -31,6 +31,7 @@ class loginActivity : AppCompatActivity() {
         btn1 = findViewById(R.id.btn1)
 
         dbManager = MyDatabaseHelper(this, "tripDB.db", null, 1)
+        sqlDB = dbManager.writableDatabase
 
         //조회 코드
         btn1.setOnClickListener {

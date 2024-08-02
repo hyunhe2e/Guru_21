@@ -1,5 +1,6 @@
 package com.example.guru_21
 
+import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -23,14 +24,22 @@ class detailMypageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_detail_mypage)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
+        // 로그인 상태 확인
+        if (isLoggedIn(this)) {
+            setupViews()
+        } else {
+            // 로그인되지 않은 경우
+            Toast.makeText(this, "로그인 해주세요", Toast.LENGTH_SHORT).show()
+            // 필요한 경우 로그인 화면으로 리다이렉트
+            val intent = Intent(this, loginActivity::class.java)
+            startActivity(intent)
+            finish()  // 현재 액티비티 종료
+        }
+    }
+    private fun setupViews(){
+        fetchUserData(SessionManager.getUserId(this))
         diary_title = findViewById(R.id.diary_detail_title)
         diary_content = findViewById(R.id.diary_detail_content)
 
@@ -57,8 +66,25 @@ class detailMypageActivity : AppCompatActivity() {
             deleteDiary(title)
 
         }
-
     }
+
+    private fun isLoggedIn(context: Context): Boolean {
+        val userId = SessionManager.getUserId(context)
+        return userId != null
+    }
+
+    private fun fetchUserData(userId: String?) {
+        if (userId.isNullOrBlank()) {
+            Toast.makeText(this, "유효하지 않은 사용자 ID", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val dbManager = MyDatabaseHelper(this, "tripDB.db", null, 1)
+        val cursor = dbManager.getUserCourses(userId)
+
+        cursor.close()
+    }
+
     private fun deleteDiary(title: String?) {
         if (title != null) {
             sqlitedb = dbHelper.writableDatabase

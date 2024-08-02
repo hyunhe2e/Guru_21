@@ -2,6 +2,7 @@
 
 package com.example.guru_21
 
+import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -10,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class myPlaceInfoActivity:AppCompatActivity() {
@@ -34,6 +36,20 @@ class myPlaceInfoActivity:AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_myplace_info)
 
+        // 로그인 상태 확인
+        if (isLoggedIn(this)) {
+            setupViews()
+        } else {
+            // 로그인되지 않은 경우
+            Toast.makeText(this, "로그인 해주세요", Toast.LENGTH_SHORT).show()
+            // 필요한 경우 로그인 화면으로 리다이렉트
+            val intent = Intent(this, loginActivity::class.java)
+            startActivity(intent)
+            finish()  // 현재 액티비티 종료
+        }
+    }
+    private fun setupViews(){
+        fetchUserData(SessionManager.getUserId(this))
 
         tvmyplaceName = findViewById(R.id.edtplacename)
         tvmyplaceAddress = findViewById(R.id.edtplaceaddress)
@@ -75,7 +91,23 @@ class myPlaceInfoActivity:AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
 
+    private fun isLoggedIn(context: Context): Boolean {
+        val userId = SessionManager.getUserId(context)
+        return userId != null
+    }
+
+    private fun fetchUserData(userId: String?) {
+        if (userId.isNullOrBlank()) {
+            Toast.makeText(this, "유효하지 않은 사용자 ID", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val dbManager = MyDatabaseHelper(this, "tripDB.db", null, 1)
+        val cursor = dbManager.getUserCourses(userId)
+
+        cursor.close()
     }
 
 
