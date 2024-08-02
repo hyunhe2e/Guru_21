@@ -13,8 +13,6 @@ class MyDatabaseHelper(
 
 
     override fun onCreate(db: SQLiteDatabase) {
-        //mypage
-        db.execSQL("CREATE TABLE travel_diary(title text, content text)")
         //review
         db.execSQL("CREATE TABLE review(title text, content text)")
 
