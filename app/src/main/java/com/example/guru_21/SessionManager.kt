@@ -17,4 +17,18 @@ object SessionManager {
         val sharedPref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         return sharedPref.getString(KEY_AUTH_TOKEN, null)
     }
+
+    fun setAuthToken(context: Context, authToken: String) {
+        val sharedPref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.putString(KEY_AUTH_TOKEN, authToken)
+        editor.apply()  // 변경 사항 저장
+    }
+
+    fun clearSession(context: Context) {
+        val sharedPref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.clear()
+        editor.apply()  // 변경 사항 저장
+    }
 }

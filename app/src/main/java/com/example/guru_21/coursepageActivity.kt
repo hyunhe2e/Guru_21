@@ -1,11 +1,14 @@
 package com.example.guru_21
 
+import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -23,14 +26,44 @@ class coursepageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coursepage)
 
+        // 로그인 상태 확인
+        if (isLoggedIn(this)) {
+            setupViews()
+        } else {
+            // 로그인되지 않은 경우
+            Toast.makeText(this, "로그인 해주세요", Toast.LENGTH_SHORT).show()
+            // 필요한 경우 로그인 화면으로 리다이렉트
+            val intent = Intent(this, loginActivity::class.java)
+            startActivity(intent)
+            finish()  // 현재 액티비티 종료
+        }
+    }
+
+    private fun setupViews(){
+        fetchUserData(SessionManager.getUserId(this))
+
         dbManager = MyDatabaseHelper(this, "review", null, 1)
         sqlitedb = dbManager.readableDatabase
-
         mainLayout = findViewById(R.id.scroll_layout)
-
         loadPosts()
-
     }
+
+    private fun isLoggedIn(context: Context): Boolean {
+        return SessionManager.getUserId(context) != null
+    }
+
+    private fun fetchUserData(userId: String?) {
+        if (userId.isNullOrBlank()) {
+            Toast.makeText(this, "유효하지 않은 사용자 ID", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val dbManager = MyDatabaseHelper(this, "tripDB.db", null, 1)
+        val cursor = dbManager.getUserCourses(userId)
+
+        cursor.close()
+    }
+
 
     private fun loadPosts() {
         val cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM review;", null)

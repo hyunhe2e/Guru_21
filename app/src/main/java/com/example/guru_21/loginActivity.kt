@@ -43,7 +43,7 @@ class loginActivity : AppCompatActivity() {
                 if (name.isNotBlank() && pwd.isNotBlank()) {
                     // 데이터베이스에서 name과 pwd가 일치하는 레코드가 있는지 확인
                     val cursor = sqlDB.rawQuery(
-                        "SELECT * FROM member WHERE userID = ? AND PWD = ?",
+                        "SELECT * FROM member WHERE NAME = ? AND PWD = ?",
                         arrayOf(name, pwd)
                     )
                     if (cursor.moveToFirst()) {

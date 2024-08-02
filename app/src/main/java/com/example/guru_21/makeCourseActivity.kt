@@ -130,9 +130,9 @@ class makeCourseActivity : AppCompatActivity() {
         }
 
     private fun isLoggedIn(context: Context): Boolean {
-        val userId = SessionManager.getUserId(context)
-        return userId != null
+        return SessionManager.getUserId(context) != null
     }
+
 
     private fun fetchUserData(userId: String?) {
         if (userId.isNullOrBlank()) {
