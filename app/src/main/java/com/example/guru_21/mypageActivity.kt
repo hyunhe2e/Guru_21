@@ -30,11 +30,7 @@ class mypageActivity : AppCompatActivity() {
         adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, diaryList)
         listView.adapter = adapter
 
-        val addDiaryButton: Button = findViewById(R.id.add_diary_button)
-        addDiaryButton.setOnClickListener {
-            val intent = Intent(this, addMypageActivity::class.java)
-            startActivity(intent)
-        }
+
         loadDiaries()
 
         listView.setOnItemClickListener { _, _, position, _ ->
@@ -65,32 +61,6 @@ class mypageActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
     }
 
-    fun showAddDiaryDialog() {
-
-        val dialogView = layoutInflater.inflate(R.layout.activity_add_mypage, null)
-        val titleEditText: EditText = dialogView.findViewById(R.id.diary_title)
-        val contentEditText: EditText = dialogView.findViewById(R.id.diary_content)
-
-        val dialog = AlertDialog.Builder(this)
-            .setTitle("Add Diary")
-            .setView(dialogView)
-            .setPositiveButton("Save") { _, _ ->
-                val title = titleEditText.text.toString()
-                val content = contentEditText.text.toString()
-
-                if (title.isEmpty() || content.isEmpty()) {
-                    Toast.makeText(this, "내용을 입력하세요", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .setNegativeButton("취소", null)
-            .create()
-        dialog.show()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        loadDiaries()
-    }
 
 }
 

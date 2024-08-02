@@ -54,9 +54,7 @@
         <activity
             android:name=".makeCourseActivity"
             android:exported="false" />
-        <activity
-            android:name=".watchCourseActivity"
-            android:exported="false" />
+
         <activity
             android:name=".mypageActivity"
             android:exported="false" />
@@ -68,13 +66,15 @@
             android:exported="false" />
         <activity
             android:name=".addMyCourseActivity"
-            android:exported="true"></activity>
+            android:exported="true">
+        </activity>
         <activity
             android:name=".myPlaceInfoActivity"
             android:exported="false" />
         <activity
             android:name=".courseActivity"
-            android:exported="true"></activity>
+            android:exported="true">
+        </activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
