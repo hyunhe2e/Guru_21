@@ -127,8 +127,8 @@ class makeCourseActivity : AppCompatActivity() {
             }
 
             cursor.close()
-            sqlitedb.close()
-            dbManager.close()
+            //sqlitedb.close()
+            //dbManager.close()
         }
 
     private fun upload() {
