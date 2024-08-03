@@ -64,8 +64,28 @@ class makeCourseActivity : AppCompatActivity() {
 
             // 업로드 버튼
             btnUpload.setOnClickListener{
-                sqlitedb.execSQL("INSERT INTO review (stat) VALUES (1)")
-                upload()
+                val cursor = sqlitedb.rawQuery("SELECT title, content FROM review", null)
+                var validData = true
+
+                if (cursor.moveToFirst()) {
+                    val title = cursor.getString(cursor.getColumnIndex("title"))
+                    val content = cursor.getString(cursor.getColumnIndex("content"))
+
+                    // title 또는 content가 null인 경우 validData를 false로 설정
+                    if (title == null || content == null) {
+                        validData = false
+                        Toast.makeText(this, "후기가 없습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                cursor.close()
+
+                // validData가 true일 때만 stat 삽입
+                if (validData) {
+                    sqlitedb.execSQL("INSERT INTO review (stat) VALUES (1)")
+                    upload()
+                }
+
             }
 
             // watch_review_button 클릭 시 후기 목록창으로 이동
