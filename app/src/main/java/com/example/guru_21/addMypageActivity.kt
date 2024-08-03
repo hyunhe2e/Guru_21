@@ -43,7 +43,7 @@ class addMypageActivity : AppCompatActivity() {
         diary_content= findViewById(R.id.diary_content)
         save_diary_button = findViewById(R.id.save_diary_button)
 
-        dbHelper= MyDatabaseHelper(this, "review",null,1)
+        dbHelper= MyDatabaseHelper(this, "tripDB",null,1)
 
         // Intent로 전달된 placename을 받아서 diary_title에 설정
         val placename = intent.getStringExtra("placename")
@@ -54,9 +54,9 @@ class addMypageActivity : AppCompatActivity() {
         save_diary_button.setOnClickListener {
             var title = diary_title.text.toString()
             var content = diary_content.text.toString()
-
+            val userId = SessionManager.getUserId(this)
             sqlitedb = dbHelper.writableDatabase
-            sqlitedb.execSQL("INSERT INTO review VALUES ('$title', '$content')")
+            sqlitedb.execSQL("INSERT INTO review VALUES ('$userId','$title', '$content')")
             sqlitedb.close()
 
             val intent = Intent(this, myPlaceInfoActivity::class.java)

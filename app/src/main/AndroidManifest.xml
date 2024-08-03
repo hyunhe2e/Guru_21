@@ -20,6 +20,9 @@
             android:name=".postdetailActivity"
             android:exported="false" />
         <activity
+            android:name=".reviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".coursepageActivity"
             android:exported="false"
             android:label="@string/title_activity_coursepage"

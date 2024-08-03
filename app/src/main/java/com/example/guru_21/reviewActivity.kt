@@ -39,7 +39,7 @@ class reviewActivity : AppCompatActivity() {
         private fun setupViews(){
             fetchUserData(SessionManager.getUserId(this))
 
-            dbHelper = MyDatabaseHelper(this, "review", null, 1)
+            dbHelper = MyDatabaseHelper(this, "tripDB", null, 1)
             reviewList = ArrayList()
 
             val listView: ListView = findViewById(R.id.review_list_view)
