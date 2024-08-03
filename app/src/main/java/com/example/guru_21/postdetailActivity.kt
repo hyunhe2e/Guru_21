@@ -38,8 +38,8 @@ class postdetailActivity : AppCompatActivity() {
     private fun loadPlaceDetails(title: String, content: TextView) {
         val cursor = sqlitedb.rawQuery("""
             SELECT  mycourse.userID,  mycourse.placename,  mycourse.placeaddress,  mycourse.placecall,  mycourse.placecost
-            FROM table1  mycourse
-            INNER JOIN table2 review ON review.placename = review.title
+            FROM mycourse
+            INNER JOIN review ON review.placename = review.title
             WHERE review.title = ?
         """, arrayOf(title))
 

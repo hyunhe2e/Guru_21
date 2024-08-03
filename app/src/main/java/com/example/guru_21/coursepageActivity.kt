@@ -28,6 +28,8 @@ class coursepageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coursepage)
 
+        mainLayout = findViewById(R.id.scroll_layout)
+
         val inputText = intent.getStringExtra("inputText")
 
         if (inputText != null) {

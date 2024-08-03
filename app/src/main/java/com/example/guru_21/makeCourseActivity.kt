@@ -64,9 +64,7 @@ class makeCourseActivity : AppCompatActivity() {
 
             // 업로드 버튼
             btnUpload.setOnClickListener{
-
-                var intent = Intent(this, coursepageActivity::class.java)
-                startActivity(intent)
+                upload()
             }
 
             // watch_review_button 클릭 시 후기 목록창으로 이동
@@ -153,7 +151,7 @@ class makeCourseActivity : AppCompatActivity() {
     private fun sendingUserInput(input: String) {
         if (input.isNotBlank()) {
             val intent = Intent(this, coursepageActivity::class.java)
-            intent.putExtra("inputText", input)
+            intent.putExtra("알림", input)
             startActivity(intent)
         } else {
             Toast.makeText(this, "업로드 할 타이틀이 입력되지 않았습니다. 타이틀을 입력해주세요. ", Toast.LENGTH_SHORT).show()
