@@ -31,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="300dp"
         android:layout_marginTop="400dp"
+        android:fontFamily="@font/tfont"
         android:text="삭제" />
 
 </LinearLayout>

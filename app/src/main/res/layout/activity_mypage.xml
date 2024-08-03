@@ -14,6 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="마이페이지"
+        android:fontFamily="@font/tfont"
         android:textSize="24sp"
         android:layout_gravity="center"/>
 
@@ -22,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:fontFamily="@font/tfont"
         android:text="내 코스 관리" />
 
 </LinearLayout>

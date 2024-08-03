@@ -13,6 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/tfont"
             android:text="장소 이름: "
             android:textSize="20sp"/>
 
@@ -34,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="주소: "
+            android:fontFamily="@font/tfont"
             android:textSize="15sp"/>
 
         <EditText
@@ -54,6 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="전화: "
+        android:fontFamily="@font/tfont"
         android:textSize="15sp"/>
 
     <EditText
@@ -92,6 +95,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="150dp"
             android:gravity="center"
+            android:fontFamily="@font/tfont"
             android:text="가져오기" />
     </LinearLayout>
 

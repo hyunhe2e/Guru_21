@@ -16,6 +16,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="나의 코스"
+        android:fontFamily="@font/tfont"
         android:textSize="24sp" />
 
     <ScrollView
@@ -44,18 +45,21 @@
             android:id="@+id/btnGoaddMycourse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/tfont"
             android:text="추가하기" />
 
         <Button
             android:id="@+id/btnUpload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/tfont"
             android:text="업로드" />
 
         <Button
             android:id="@+id/watch_review_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/tfont"
             android:text="후기 보기" />
 
     </LinearLayout>

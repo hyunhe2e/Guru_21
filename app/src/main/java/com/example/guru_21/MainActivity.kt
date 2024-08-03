@@ -42,12 +42,6 @@ class MainActivity : AppCompatActivity() {
             val editor = sharedPref.edit()
             editor.clear()
             editor.apply()
-
-            // 로그인 화면으로 리다이렉트
-            val intent = Intent(this, loginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finish()
         }
 
 

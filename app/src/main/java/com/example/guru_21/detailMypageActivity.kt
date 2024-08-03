@@ -49,7 +49,7 @@ class detailMypageActivity : AppCompatActivity() {
         if (title != null) {
             sqlitedb = dbHelper.readableDatabase
             val cursor: Cursor =
-                sqlitedb.rawQuery("SELECT * FROM review WHERE title = '$title'", null)
+                sqlitedb.rawQuery("SELECT * FROM review WHERE title = '$title' AND  userID = ?", arrayOf(SessionManager.getUserId(this)))
 
             if (cursor.moveToFirst()) {
                 val content = cursor.getString(cursor.getColumnIndexOrThrow("content"))

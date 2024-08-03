@@ -85,9 +85,10 @@ class MyDatabaseHelper(
         return db.rawQuery("SELECT * FROM mycourse WHERE userID = ?", arrayOf(userId))
     }
 
-    // ID에 따른 전체 코스 조회
-    fun getAllCourses(userId: String): Cursor {
+
+    // 전체 코스 조회
+    fun getAllCourses(): Cursor {
         val db = readableDatabase
-        return db.rawQuery("SELECT * FROM all_course WHERE userID = ?", arrayOf(userId))
+        return db.rawQuery("SELECT * FROM all_course", null)
     }
 }

@@ -17,12 +17,14 @@
         android:layout_height="38dp"
         android:layout_gravity="center"
         android:layout_marginLeft="150dp"
+        android:fontFamily="@font/tfont"
         android:text="save" />
 
     <EditText
         android:id="@+id/diary_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/tfont"
         android:hint="제목" />
 
     <EditText
@@ -31,6 +33,7 @@
         android:layout_height="459dp"
         android:gravity="start"
         android:hint="내용을 입력하세요"
+        android:fontFamily="@font/tfont"
         android:inputType="textMultiLine" />
 
 

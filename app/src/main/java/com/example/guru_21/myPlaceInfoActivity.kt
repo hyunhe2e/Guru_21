@@ -27,11 +27,12 @@ class myPlaceInfoActivity:AppCompatActivity() {
     lateinit var tvmyplaceCost: TextView
     lateinit var tvmyplaceComment: TextView
 
-    lateinit var str_placename: String
-    lateinit var str_placeaddress: String
-    lateinit var str_placecall: String
-    var placecost: Int = 0
-    lateinit var str_placecomment: String
+    private var str_placename: String = ""
+    private var str_placeaddress: String = ""
+    private var str_placecall: String = ""
+    private var placecost: Int = 0
+    private var str_placecomment: String = ""
+
     lateinit var imageView: ImageView
     var byteArray: ByteArray? = null
 
@@ -78,7 +79,7 @@ class myPlaceInfoActivity:AppCompatActivity() {
 
 
         var intent = intent
-        str_placename = intent.getStringExtra("intent_name").toString()
+        str_placename = intent.getStringExtra("intent_name") ?: ""
 
         dbManager = MyDatabaseHelper(this, "tripDB", null, 1)
         sqlitedb = dbManager.readableDatabase
@@ -86,7 +87,7 @@ class myPlaceInfoActivity:AppCompatActivity() {
         try {
             var cursor: Cursor
             cursor = sqlitedb.rawQuery(
-                "SELECT placename, placeaddress, placecall, placecost, placecomment, placeimage FROM mycourse WHERE placename = '" + str_placename + "';",
+                "SELECT placename, placeaddress, placecall, placecost, placecomment, placeimage FROM mycourse WHERE userID = ? AND placename = '" + str_placename + "';",
                 null
             )
 

@@ -84,7 +84,9 @@ class reviewActivity : AppCompatActivity() {
         if (cursor.moveToFirst()) {
             do {
                 val title = cursor.getString(cursor.getColumnIndexOrThrow("title"))
-                reviewList.add(title)
+                if(title != null){
+                    reviewList.add(title)
+                }
             } while (cursor.moveToNext())
         }
         cursor.close()

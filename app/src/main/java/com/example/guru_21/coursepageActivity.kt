@@ -75,15 +75,15 @@ class coursepageActivity : AppCompatActivity() {
             return
         }
 
-        val dbManager = MyDatabaseHelper(this, "tripDB.db", null, 1)
-        val cursor = dbManager.getUserCourses(userId)
+        //val dbManager = MyDatabaseHelper(this, "tripDB.db", null, 1)
+        //val cursor = dbManager.getUserCourses(userId)
 
-        cursor.close()
+        //cursor.close()
     }
 
 
     private fun loadPosts() {
-        val cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM review;", null)
+        val cursor: Cursor = dbManager.getAllCourses()
 
         if (cursor.moveToFirst()) {
             do {

@@ -100,6 +100,7 @@ class addMyCourseActivity : AppCompatActivity() {
         val strPlaceComment = edtPlaceComment.text.toString()
         val bitmap = imageViewToBitmap(Imagepicture)
         val byteArray = bitmapToByteArray(bitmap)
+        val id = SessionManager.getUserId(this)
 
         sqlitedb = dbManager.writableDatabase
 //        sqlitedb.execSQL("INSERT INTO mycourse(placename, placeaddress, placecall, placecost, placecomment) VALUES (?, ?, ?, ?, ?)",
@@ -107,6 +108,7 @@ class addMyCourseActivity : AppCompatActivity() {
         //BLOB 값 사용 위한 코드 변경
         val sqlitedb = dbManager.writableDatabase
         val values = ContentValues().apply {
+            put("userID", id)
             put("placename", strPlaceName)
             put("placeaddress", strPlaceAddress)
             put("placecall", strPlaceCall)
