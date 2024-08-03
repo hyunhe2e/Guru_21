@@ -15,14 +15,13 @@ class MyDatabaseHelper(
 
     override fun onCreate(db: SQLiteDatabase) {
         //review
-        db.execSQL("CREATE TABLE review(userID text PRIMARY KEY, title text, content text, stat int, " + "FOREIGN KEY(userID) REFERENCES Member(NAME))")
+        db.execSQL("CREATE TABLE review(userID text, title text, content text, stat int, " + "FOREIGN KEY(userID) REFERENCES Member(NAME))")
 
         //addMyCourse, makeCourse, mypageInfo
-        db.execSQL("CREATE TABLE  mycourse(userID text PRIMARY KEY, courseID text, placename text, placeaddress text, placecall text, placecost INTEGER, placecomment text, placeimage blob, review text, "
-                + "FOREIGN KEY(userID) REFERENCES Member(NAME))")
+        db.execSQL("CREATE TABLE  mycourse(userID text, courseID text, placename text, placeaddress text, placecall text, placecost INTEGER, placecomment text, placeimage blob, review text, " + "FOREIGN KEY(userID) REFERENCES Member(NAME))")
 
         // course_page
-        db.execSQL("CREATE TABLE all_course(userID text PRIMARY KEY, title text, content text, " +
+        db.execSQL("CREATE TABLE all_course(userID text, title text, content text, "+
                 "FOREIGN KEY(userID) REFERENCES Member(NAME))")
 
 
@@ -46,16 +45,16 @@ class MyDatabaseHelper(
 
         override fun onCreate(db: SQLiteDatabase) {
             //mypage
-            db.execSQL("CREATE TABLE travel_diary(userID text PRIMARY KEY, title text, content text, " + "FOREIGN KEY(userID) REFERENCES Member(NAME))")
+            db.execSQL("CREATE TABLE travel_diary(userID text, title text, content text, " + "FOREIGN KEY(userID) REFERENCES Member(NAME))")
             //review
-            db.execSQL("CREATE TABLE review(userID text PRIMARY KEY, title text, content text, stat int, " + "FOREIGN KEY(userID) REFERENCES Member(NAME))")
+            db.execSQL("CREATE TABLE review(userID text, title text, content text, stat int, " + "FOREIGN KEY(userID) REFERENCES Member(NAME))")
 
             //addMyCourse, makeCourse, mypageInfo
-            db.execSQL("CREATE TABLE  mycourse(userID text PRIMARY KEY, courseID text, placename text, placeaddress text, placecall text, placecost INTEGER, placecomment text, placeimage blob,  review text, "
+            db.execSQL("CREATE TABLE  mycourse(userID text, courseID text, placename text, placeaddress text, placecall text, placecost INTEGER, placecomment text, placeimage blob,  review text, "
                     + "FOREIGN KEY(userID) REFERENCES Member(NAME))")
 
             // course_page
-            db.execSQL("CREATE TABLE all_course(userID text PRIMARY KEY, title text, content text, " +
+            db.execSQL("CREATE TABLE all_course(userID text, title text, content text, " +
                     "FOREIGN KEY(userID) REFERENCES Member(NAME))")
 
 

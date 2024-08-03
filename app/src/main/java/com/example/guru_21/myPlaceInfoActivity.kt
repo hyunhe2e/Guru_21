@@ -87,7 +87,7 @@ class myPlaceInfoActivity:AppCompatActivity() {
         try {
             var cursor: Cursor
             cursor = sqlitedb.rawQuery(
-                "SELECT placename, placeaddress, placecall, placecost, placecomment, placeimage FROM mycourse WHERE userID = ? AND placename = '" + str_placename + "';",
+                "SELECT placename, placeaddress, placecall, placecost, placecomment, placeimage FROM mycourse WHERE placename = '" + str_placename + "';",
                 null
             )
 

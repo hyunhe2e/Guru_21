@@ -64,7 +64,7 @@ class makeCourseActivity : AppCompatActivity() {
 
             // 업로드 버튼
             btnUpload.setOnClickListener{
-                val cursor = sqlitedb.rawQuery("SELECT title, content FROM review WHERE userID = ?", arrayOf(SessionManager.getUserId(this)))
+                val cursor = sqlitedb.rawQuery("SELECT title, content FROM review", null)
                 var validData = true
 
                 if (cursor.moveToFirst()) {
@@ -149,6 +149,7 @@ class makeCourseActivity : AppCompatActivity() {
             cursor.close()
             //sqlitedb.close()
             //dbManager.close()
+
         }
 
     private fun upload() {
