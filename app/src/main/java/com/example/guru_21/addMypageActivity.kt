@@ -56,7 +56,7 @@ class addMypageActivity : AppCompatActivity() {
             var content = diary_content.text.toString()
             val userId = SessionManager.getUserId(this)
             sqlitedb = dbHelper.writableDatabase
-            sqlitedb.execSQL("INSERT INTO review(userID, title, content) VALUES ('$userId','$title', '$content')")
+            sqlitedb.execSQL("INSERT INTO review(title, content) VALUES ('$title', '$content')")
             sqlitedb.close()
 
             val intent = Intent(this, myPlaceInfoActivity::class.java)

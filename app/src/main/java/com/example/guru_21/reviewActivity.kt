@@ -90,27 +90,7 @@ class reviewActivity : AppCompatActivity() {
         cursor.close()
         adapter.notifyDataSetChanged()
     }
-    fun showAddReviewDialog() {
 
-        val dialogView = layoutInflater.inflate(R.layout.activity_add_mypage, null)
-        val titleEditText: EditText = dialogView.findViewById(R.id.diary_title)
-        val contentEditText: EditText = dialogView.findViewById(R.id.diary_content)
-
-        val dialog = AlertDialog.Builder(this)
-            .setTitle("Add Diary")
-            .setView(dialogView)
-            .setPositiveButton("Save") { _, _ ->
-                val title = titleEditText.text.toString()
-                val content = contentEditText.text.toString()
-
-                if (title.isEmpty() || content.isEmpty()) {
-                    Toast.makeText(this, "내용을 입력하세요", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .setNegativeButton("취소", null)
-            .create()
-        dialog.show()
-    }
 
     override fun onResume() {
         super.onResume()
