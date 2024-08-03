@@ -2,18 +2,25 @@
 
 package com.example.guru_21
 
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.guru_21.databinding.ActivityAddMycourseBinding
+import java.io.ByteArrayOutputStream
 
 class addMyCourseActivity : AppCompatActivity() {
 
@@ -27,6 +34,7 @@ class addMyCourseActivity : AppCompatActivity() {
     lateinit var edtPlaceCost: EditText
     lateinit var edtPlaceComment: EditText
     private lateinit var binding: ActivityAddMycourseBinding
+    lateinit var Imagepicture: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +63,7 @@ class addMyCourseActivity : AppCompatActivity() {
         edtPlaceCall = findViewById(R.id.edtPlaceCall)
         edtPlaceCost = findViewById(R.id.edtPlaceCost)
         edtPlaceComment = findViewById(R.id.edtPlaceComment)
+        Imagepicture = findViewById(R.id.Imagepicture)
 
         // 구글 정보 가져오기
         val receiveName = intent.getStringExtra("SendName")
@@ -89,10 +98,25 @@ class addMyCourseActivity : AppCompatActivity() {
         val strPlaceCall = edtPlaceCall.text.toString()
         val strPlaceCost = edtPlaceCost.text.toString()
         val strPlaceComment = edtPlaceComment.text.toString()
+        val bitmap = imageViewToBitmap(Imagepicture)
+        val byteArray = bitmapToByteArray(bitmap)
 
         sqlitedb = dbManager.writableDatabase
-        sqlitedb.execSQL("INSERT INTO mycourse(placename, placeaddress, placecall, placecost, placecomment) VALUES (?, ?, ?, ?, ?)",
-            arrayOf(strPlaceName, strPlaceAddress, strPlaceCall, strPlaceCost, strPlaceComment))
+//        sqlitedb.execSQL("INSERT INTO mycourse(placename, placeaddress, placecall, placecost, placecomment) VALUES (?, ?, ?, ?, ?)",
+//            arrayOf(strPlaceName, strPlaceAddress, strPlaceCall, strPlaceCost, strPlaceComment))
+        //BLOB 값 사용 위한 코드 변경
+        val sqlitedb = dbManager.writableDatabase
+        val values = ContentValues().apply {
+            put("placename", strPlaceName)
+            put("placeaddress", strPlaceAddress)
+            put("placecall", strPlaceCall)
+            put("placecost", strPlaceCost)
+            put("placecomment", strPlaceComment)
+            if (byteArray != null) {
+                put("placeimage", byteArray) // 'placeimage'는 데이터베이스의 BLOB 컬럼
+            }
+        }
+        sqlitedb.insert("mycourse", null, values)
         sqlitedb.close()
 
         val intent = Intent(this, makeCourseActivity::class.java)
@@ -132,5 +156,33 @@ class addMyCourseActivity : AppCompatActivity() {
                 .load(uri)
                 .into(binding.Imagepicture)
         }
+    }
+
+    //이미지 비트맵으로
+    fun imageViewToBitmap(imageView: ImageView): Bitmap? {
+        val drawable: Drawable? = imageView.drawable
+        return drawable?.let {
+            if (it is BitmapDrawable) {
+                it.bitmap
+            } else {
+                val width = it.intrinsicWidth.takeIf { it > 0 } ?: imageView.width
+                val height = it.intrinsicHeight.takeIf { it > 0 } ?: imageView.height
+                val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+                val canvas = Canvas(bitmap)
+                it.setBounds(0, 0, canvas.width, canvas.height)
+                it.draw(canvas)
+                bitmap
+            }
+        }
+    }
+
+    //비트맵 바이트로
+    fun bitmapToByteArray(bitmap: Bitmap?): ByteArray? {
+        if (bitmap == null) {
+            return null
+        }
+        val outputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+        return outputStream.toByteArray()
     }
 }

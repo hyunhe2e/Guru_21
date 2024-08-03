@@ -6,10 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +32,21 @@ class myPlaceInfoActivity:AppCompatActivity() {
     lateinit var str_placecall: String
     var placecost: Int = 0
     lateinit var str_placecomment: String
+    lateinit var imageView: ImageView
+    var byteArray: ByteArray? = null
+
+
+    fun byteArrayToBitmap(byteArray: ByteArray?):Bitmap?{
+        return try{
+            if(byteArray!=null && byteArray.isNotEmpty()){
+                BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+            } else{
+                null
+            }
+        }catch (e: Exception){
+            null
+        }
+    }
 
 
 
@@ -56,6 +74,7 @@ class myPlaceInfoActivity:AppCompatActivity() {
         tvmyplaceCall = findViewById(R.id.edtplacecall)
         tvmyplaceCost = findViewById(R.id.edtplacecost)
         tvmyplaceComment = findViewById(R.id.edtplacecomment)
+        imageView = findViewById(R.id.imageView)
 
 
         var intent = intent
@@ -64,25 +83,48 @@ class myPlaceInfoActivity:AppCompatActivity() {
         dbManager = MyDatabaseHelper(this, "tripDB", null, 1)
         sqlitedb = dbManager.readableDatabase
 
-        var cursor: Cursor
-        cursor = sqlitedb.rawQuery("SELECT placename, placeaddress, placecall, placecost, placecomment FROM mycourse WHERE placename = '"+str_placename+"';", null)
+        try {
+            var cursor: Cursor
+            cursor = sqlitedb.rawQuery(
+                "SELECT placename, placeaddress, placecall, placecost, placecomment, placeimage FROM mycourse WHERE placename = '" + str_placename + "';",
+                null
+            )
 
-        if(cursor.moveToNext()) {
-            str_placeaddress = cursor.getString(cursor.getColumnIndex("placeaddress")).toString()
-            str_placecall = cursor.getString(cursor.getColumnIndex("placecall")).toString()
-            placecost = cursor.getInt(cursor.getColumnIndex("placecost"))
-            str_placecomment = cursor.getString(cursor.getColumnIndex("placecomment")).toString()
+            if (cursor.moveToNext()) {
+                str_placeaddress =
+                    cursor.getString(cursor.getColumnIndex("placeaddress")).toString()
+                str_placecall = cursor.getString(cursor.getColumnIndex("placecall")).toString()
+                placecost = cursor.getInt(cursor.getColumnIndex("placecost"))
+                str_placecomment =
+                    cursor.getString(cursor.getColumnIndex("placecomment")).toString()
+                byteArray = cursor.getBlob(cursor.getColumnIndex("placeimage"))
+            }
+
+            if (byteArray != null) {
+                var bitmap = byteArrayToBitmap(byteArray)
+                if (bitmap != null) {
+                    imageView.setImageBitmap(bitmap)
+                } else {
+                    imageView.setImageDrawable(null)
+                }
+            } else {
+                imageView.setImageDrawable(null)
+            }
+
+            cursor.close()
+        } catch (e: Exception){
+
+        } finally {
+            tvmyplaceName.text=str_placename
+            tvmyplaceAddress.text=str_placeaddress
+            tvmyplaceCall.text=str_placecall
+            tvmyplaceCost.text=""+placecost
+            tvmyplaceComment.text=str_placecomment+"\n"
+            sqlitedb.close()
+            dbManager.close()
         }
 
-        cursor.close()
-        sqlitedb.close()
-        dbManager.close()
 
-        tvmyplaceName.text=str_placename
-        tvmyplaceAddress.text=str_placeaddress
-        tvmyplaceCall.text=str_placecall
-        tvmyplaceCost.text=""+placecost
-        tvmyplaceComment.text=str_placecomment+"\n"
 
         // 장소 이름 클릭 시 후기 작성 창으로 이동
         tvmyplaceName.setOnClickListener {
