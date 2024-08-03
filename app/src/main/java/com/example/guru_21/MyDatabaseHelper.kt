@@ -18,7 +18,7 @@ class MyDatabaseHelper(
         db.execSQL("CREATE TABLE review(userID text PRIMARY KEY, title text, content text, stat int, " + "FOREIGN KEY(userID) REFERENCES Member(NAME))")
 
         //addMyCourse, makeCourse, mypageInfo
-        db.execSQL("CREATE TABLE  mycourse(userID text PRIMARY KEY, courseID text, placename text, placeaddress text, placecall text, placecost INTEGER, placecomment text, review text, "
+        db.execSQL("CREATE TABLE  mycourse(userID text PRIMARY KEY, courseID text, placename text, placeaddress text, placecall text, placecost INTEGER, placecomment text, placeimage blob, review text, "
                 + "FOREIGN KEY(userID) REFERENCES Member(NAME))")
 
         // course_page
@@ -51,7 +51,7 @@ class MyDatabaseHelper(
             db.execSQL("CREATE TABLE review(userID text PRIMARY KEY, title text, content text, stat int, " + "FOREIGN KEY(userID) REFERENCES Member(NAME))")
 
             //addMyCourse, makeCourse, mypageInfo
-            db.execSQL("CREATE TABLE  mycourse(userID text PRIMARY KEY, courseID text, placename text, placeaddress text, placecall text, placecost INTEGER, placecomment text, review text, "
+            db.execSQL("CREATE TABLE  mycourse(userID text PRIMARY KEY, courseID text, placename text, placeaddress text, placecall text, placecost INTEGER, placecomment text, placeimage blob,  review text, "
                     + "FOREIGN KEY(userID) REFERENCES Member(NAME))")
 
             // course_page
