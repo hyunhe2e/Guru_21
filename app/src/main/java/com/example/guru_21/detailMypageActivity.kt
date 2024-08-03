@@ -43,7 +43,7 @@ class detailMypageActivity : AppCompatActivity() {
         diary_title = findViewById(R.id.diary_detail_title)
         diary_content = findViewById(R.id.diary_detail_content)
 
-        dbHelper = MyDatabaseHelper(this, "review", null, 1)
+        dbHelper = MyDatabaseHelper(this, "tripDB", null, 1)
 
         val title = intent.getStringExtra("intent_name")
         if (title != null) {
