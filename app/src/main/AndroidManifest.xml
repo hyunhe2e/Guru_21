@@ -42,7 +42,13 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/main"></activity>
+            android:label="@string/main">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".detailMypageActivity"
             android:exported="false" />
@@ -64,11 +70,7 @@
         <activity
             android:name=".addMyCourseActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".myPlaceInfoActivity"

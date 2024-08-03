@@ -61,7 +61,6 @@ class loginActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 Toast.makeText(applicationContext, "오류 발생: ${e.message}", Toast.LENGTH_SHORT).show()
             } finally {
-                sqlDB.close()
                 if(state == true) {
                     // JWT 생성
                     val authToken = JwtUtils.generateToken(name)
@@ -69,6 +68,7 @@ class loginActivity : AppCompatActivity() {
                     loginUser(name, authToken)
                     var intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
+                    sqlDB.close()
                 }
             }
         }
