@@ -1,5 +1,6 @@
 package com.example.guru_21
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
@@ -9,6 +10,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -62,6 +64,7 @@ class makeCourseActivity : AppCompatActivity() {
 
             // 업로드 버튼
             btnUpload.setOnClickListener{
+
                 var intent = Intent(this, coursepageActivity::class.java)
                 startActivity(intent)
             }
@@ -128,6 +131,35 @@ class makeCourseActivity : AppCompatActivity() {
             sqlitedb.close()
             dbManager.close()
         }
+
+    private fun upload() {
+        val dialogView = layoutInflater.inflate(R.layout.activity_dialog, null)
+        val dialogEditText = dialogView.findViewById<EditText>(R.id.editTextDialog)
+
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Input Text")
+            .setView(dialogView)
+            .setPositiveButton("OK") { dialogInterface, i ->
+                val inputText = dialogEditText.text.toString()
+                sendingUserInput(inputText)
+            }
+            .setNegativeButton("Cancel", null)
+            .create()
+
+        dialog.show()
+
+    }
+
+    private fun sendingUserInput(input: String) {
+        if (input.isNotBlank()) {
+            val intent = Intent(this, coursepageActivity::class.java)
+            intent.putExtra("inputText", input)
+            startActivity(intent)
+        } else {
+            Toast.makeText(this, "업로드 할 타이틀이 입력되지 않았습니다. 타이틀을 입력해주세요. ", Toast.LENGTH_SHORT).show()
+        }
+
+    }
 
     private fun isLoggedIn(context: Context): Boolean {
         return SessionManager.getUserId(context) != null

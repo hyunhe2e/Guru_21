@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -17,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat
 class coursepageActivity : AppCompatActivity() {
 
     private lateinit var mainLayout: LinearLayout
+    private lateinit var postTitleEditText: EditText
     lateinit var dbManager: MyDatabaseHelper
     lateinit var sqlitedb: SQLiteDatabase
 
@@ -25,6 +27,19 @@ class coursepageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coursepage)
+
+        val inputText = intent.getStringExtra("inputText")
+
+        if (inputText != null) {
+            postTitleEditText.setText(inputText)
+        }
+
+        if (inputText != null) {
+            postTitleEditText.setText(inputText)
+        }
+
+        // 입력된 텍스트를 사용하여 새로운 게시물을 추가
+        addPost(inputText ?: "", "")
 
         // 로그인 상태 확인
         if (isLoggedIn(this)) {
@@ -71,12 +86,12 @@ class coursepageActivity : AppCompatActivity() {
         if (cursor.moveToFirst()) {
             do {
 
-                val place = cursor.getString(cursor.getColumnIndex("title")) // Assuming this is the place
+                val place = cursor.getString(cursor.getColumnIndex("title"))
                 val content = cursor.getString(cursor.getColumnIndex("content"))
 
                 val formatContent = "$place: $content"
 
-                addPost("", formatContent)
+                addPost(place, formatContent)
             } while (cursor.moveToNext())
         }
         cursor.close()
@@ -91,6 +106,12 @@ class coursepageActivity : AppCompatActivity() {
 
         postTitle.text = title
         postContent.text = content
+
+        postView.setOnClickListener {
+            val intent = Intent(this, postdetailActivity::class.java)
+            intent.putExtra("postTitle", title)
+            startActivity(intent)
+        }
 
         mainLayout.addView(postView)
     }

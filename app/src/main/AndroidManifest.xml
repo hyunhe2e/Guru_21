@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Guru_21"
         tools:targetApi="31">
         <activity
+            android:name=".postdetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".coursepageActivity"
             android:exported="false"
             android:label="@string/title_activity_coursepage"
@@ -39,12 +42,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/main">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:label="@string/main"></activity>
         <activity
             android:name=".detailMypageActivity"
             android:exported="false" />
@@ -53,8 +51,7 @@
             android:exported="false" />
         <activity
             android:name=".makeCourseActivity"
-            android:exported="false" />
-
+            android:exported="false"></activity>
         <activity
             android:name=".mypageActivity"
             android:exported="false" />
@@ -67,14 +64,18 @@
         <activity
             android:name=".addMyCourseActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".myPlaceInfoActivity"
             android:exported="false" />
         <activity
             android:name=".courseActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
