@@ -18,11 +18,9 @@ import androidx.core.view.WindowInsetsCompat
 class coursepageActivity : AppCompatActivity() {
 
     private lateinit var mainLayout: LinearLayout
-    private lateinit var postTitleEditText: EditText
-    lateinit var dbManager: MyDatabaseHelper
-    lateinit var sqlitedb: SQLiteDatabase
-
-
+    private lateinit var postTitleEditText: TextView
+    private lateinit var dbManager: MyDatabaseHelper
+    private lateinit var sqlitedb: SQLiteDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,22 +28,21 @@ class coursepageActivity : AppCompatActivity() {
 
         mainLayout = findViewById(R.id.scroll_layout)
 
+        val inflater = LayoutInflater.from(this)
+        val postView = inflater.inflate(R.layout.activity_coursepagepost, mainLayout, false)
+
+        postTitleEditText = postView.findViewById<TextView>(R.id.post_title)
+
         val inputText = intent.getStringExtra("inputText")
-
         if (inputText != null) {
-            postTitleEditText.setText(inputText)
+            postTitleEditText.text = inputText
         }
-
-        if (inputText != null) {
-            postTitleEditText.setText(inputText)
-        }
-
-        // 입력된 텍스트를 사용하여 새로운 게시물을 추가
-        addPost(inputText ?: "", "")
 
         // 로그인 상태 확인
         if (isLoggedIn(this)) {
             setupViews()
+            // 새 게시물을 추가
+            addPost(inputText ?: "", "")
         } else {
             // 로그인되지 않은 경우
             Toast.makeText(this, "로그인 해주세요", Toast.LENGTH_SHORT).show()
@@ -56,12 +53,12 @@ class coursepageActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupViews(){
-        fetchUserData(SessionManager.getUserId(this))
-
+    private fun setupViews() {
         dbManager = MyDatabaseHelper(this, "review", null, 1)
         sqlitedb = dbManager.readableDatabase
-        mainLayout = findViewById(R.id.scroll_layout)
+
+        val userId = SessionManager.getUserId(this)
+        fetchUserData(userId)
         loadPosts()
     }
 
@@ -75,38 +72,36 @@ class coursepageActivity : AppCompatActivity() {
             return
         }
 
-        val dbManager = MyDatabaseHelper(this, "tripDB.db", null, 1)
-        val cursor = dbManager.getUserCourses(userId)
-
-        cursor.close()
+        if (::sqlitedb.isInitialized && sqlitedb.isOpen) {
+            val cursor = sqlitedb.rawQuery("SELECT * FROM user_courses WHERE user_id = ?", arrayOf(userId))
+            cursor.close()
+        } else {
+            Toast.makeText(this, "데이터베이스가 열려 있지 않습니다.", Toast.LENGTH_SHORT).show()
+        }
     }
 
-
     private fun loadPosts() {
-        val cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM review;", null)
-
-        if (cursor.moveToFirst()) {
-            do {
-
-                val place = cursor.getString(cursor.getColumnIndex("title"))
-                val content = cursor.getString(cursor.getColumnIndex("content"))
-
-                val formatContent = "$place: $content"
-
-                addPost(place, formatContent)
-            } while (cursor.moveToNext())
+        if (::sqlitedb.isInitialized && sqlitedb.isOpen) {
+            val cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM review WHERE stat = 1 ;", null)
+            if (cursor.moveToFirst()) {
+                do {
+                    val place = cursor.getString(cursor.getColumnIndex("title"))
+                    val content = cursor.getString(cursor.getColumnIndex("content"))
+                    val formatContent = "$place: $content"
+                    addPost(place, formatContent)
+                } while (cursor.moveToNext())
+            }
+            cursor.close()
+        } else {
+            Toast.makeText(this, "데이터베이스가 열려 있지 않습니다.", Toast.LENGTH_SHORT).show()
         }
-        cursor.close()
     }
 
     private fun addPost(title: String, content: String) {
         val inflater = LayoutInflater.from(this)
         val postView = inflater.inflate(R.layout.activity_coursepagepost, mainLayout, false)
 
-        val postTitle = postView.findViewById<TextView>(R.id.post_title)
         val postContent = postView.findViewById<TextView>(R.id.post_content)
-
-        postTitle.text = title
         postContent.text = content
 
         postView.setOnClickListener {
@@ -118,4 +113,15 @@ class coursepageActivity : AppCompatActivity() {
         mainLayout.addView(postView)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        // 데이터베이스가 열린 상태에서만 닫습니다.
+        if (::sqlitedb.isInitialized && sqlitedb.isOpen) {
+            sqlitedb.close()
+        }
+        if (::dbManager.isInitialized) {
+            dbManager.close()
+        }
+    }
 }

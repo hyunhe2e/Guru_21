@@ -15,9 +15,9 @@
             android:id="@+id/post_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:text="Title"
             android:textAppearance="?attr/textAppearanceHeadline6"
-            android:text="Title" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/post_content"

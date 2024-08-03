@@ -48,7 +48,7 @@ class makeCourseActivity : AppCompatActivity() {
         private fun setupViews(){
             fetchUserData(SessionManager.getUserId(this))
             dbManager = MyDatabaseHelper(this, "tripDB", null, 1)
-            sqlitedb = dbManager.readableDatabase
+            sqlitedb = dbManager.writableDatabase
 
             layout = findViewById(R.id.myCourse)
             btnGoaddMyCourse=findViewById<Button>(R.id.btnGoaddMycourse)
@@ -64,6 +64,7 @@ class makeCourseActivity : AppCompatActivity() {
 
             // 업로드 버튼
             btnUpload.setOnClickListener{
+                sqlitedb.execSQL("INSERT INTO review (stat) VALUES (1)")
                 upload()
             }
 
@@ -135,7 +136,7 @@ class makeCourseActivity : AppCompatActivity() {
         val dialogEditText = dialogView.findViewById<EditText>(R.id.editTextDialog)
 
         val dialog = AlertDialog.Builder(this)
-            .setTitle("Input Text")
+            .setTitle("알림")
             .setView(dialogView)
             .setPositiveButton("OK") { dialogInterface, i ->
                 val inputText = dialogEditText.text.toString()
@@ -148,10 +149,10 @@ class makeCourseActivity : AppCompatActivity() {
 
     }
 
-    private fun sendingUserInput(input: String) {
-        if (input.isNotBlank()) {
+    private fun sendingUserInput(inputText: String) {
+        if (inputText.isNotBlank() ) {
             val intent = Intent(this, coursepageActivity::class.java)
-            intent.putExtra("알림", input)
+            intent.putExtra("알림", inputText)
             startActivity(intent)
         } else {
             Toast.makeText(this, "업로드 할 타이틀이 입력되지 않았습니다. 타이틀을 입력해주세요. ", Toast.LENGTH_SHORT).show()
