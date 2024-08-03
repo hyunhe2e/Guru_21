@@ -74,14 +74,9 @@ class loginActivity : AppCompatActivity() {
         }
     }
     fun loginUser(userId: String, authToken: String) {
-        // SharedPreferences 인스턴스 가져오기
-        val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
-
-        // SharedPreferences.Editor를 사용하여 데이터 저장
-        val editor = sharedPref.edit()
-        editor.putString("USER_ID", userId)        // 사용자 ID 저장
-        editor.putString("AUTH_TOKEN", authToken)  // 인증 토큰 저장
-        editor.apply()  // 변경 사항 적용
+        // 사용자 세션 저장
+        SessionManager.setUserId(this, userId)
+        SessionManager.setAuthToken(this, authToken)
 
         // 로그인 성공 후 메인 화면으로 이동
         val intent = Intent(this, MainActivity::class.java)

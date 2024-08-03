@@ -18,6 +18,13 @@ object SessionManager {
         return sharedPref.getString(KEY_AUTH_TOKEN, null)
     }
 
+    fun setUserId(context: Context, userId: String) {
+        val sharedPref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.putString(KEY_USER_ID, userId)
+        editor.apply()
+    }
+
     fun setAuthToken(context: Context, authToken: String) {
         val sharedPref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPref.edit()

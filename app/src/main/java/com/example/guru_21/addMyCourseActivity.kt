@@ -35,8 +35,8 @@ class addMyCourseActivity : AppCompatActivity() {
 
         // 로그인 상태 확인
         if (isLoggedIn(this)) {
-            setupViews()
             handleGoogleInfo()
+            setupViews()
         } else {
             // 로그인되지 않은 경우
             Toast.makeText(this, "로그인 해주세요", Toast.LENGTH_SHORT).show()
