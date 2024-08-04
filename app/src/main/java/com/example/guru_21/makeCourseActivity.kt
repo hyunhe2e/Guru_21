@@ -17,11 +17,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class makeCourseActivity : AppCompatActivity() {
-
+    // 데이터베이스 헬퍼 및 데이터베이스 인스턴스
     lateinit var dbManager: MyDatabaseHelper
     lateinit var sqlitedb: SQLiteDatabase
     lateinit var layout: LinearLayout
 
+    // UI 요소
     lateinit var btnGoaddMyCourse: Button
     lateinit var btnUpload: Button
 
@@ -47,13 +48,13 @@ class makeCourseActivity : AppCompatActivity() {
 
         private fun setupViews(){
             fetchUserData(SessionManager.getUserId(this))
+
+            // 데이터베이스 헬퍼 및 UI 요소 초기화
             dbManager = MyDatabaseHelper(this, "tripDB", null, 1)
             sqlitedb = dbManager.writableDatabase
-
             layout = findViewById(R.id.myCourse)
             btnGoaddMyCourse=findViewById<Button>(R.id.btnGoaddMycourse)
             btnUpload=findViewById<Button>(R.id.btnUpload)
-
             watch_review_button = findViewById<Button>(R.id.watch_review_button)
 
             //추가하기 버튼
@@ -62,7 +63,7 @@ class makeCourseActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
-            // 업로드 버튼
+            // 업로드 버튼(데이터 검증 및 업로드)
             btnUpload.setOnClickListener{
                 val cursor = sqlitedb.rawQuery("SELECT title, content FROM review", null)
                 var validData = true
@@ -94,8 +95,8 @@ class makeCourseActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
+            // 사용자의 코스 정보를 데이터베이스에서 가져와 UI에 표시
             var cursor: Cursor
-
             cursor = sqlitedb.rawQuery("SELECT placename, placeaddress, placecall, placecost, placecomment FROM mycourse WHERE userID = ?", arrayOf(SessionManager.getUserId(this)))
 
             var num: Int = 0
@@ -136,6 +137,7 @@ class makeCourseActivity : AppCompatActivity() {
                 tvplaceComment.text=str_placecomment
                 layout_item.addView(tvplaceComment)
 
+                // 레이아웃 아이템 클릭 시 myPlaceInfoActivity로 이동
                 layout_item.setOnClickListener {
                     var intent = Intent(this, myPlaceInfoActivity::class.java)
                     intent.putExtra("intent_name", str_placename)
@@ -180,12 +182,12 @@ class makeCourseActivity : AppCompatActivity() {
         }
 
     }
-
+    // 로그인 상태 확인
     private fun isLoggedIn(context: Context): Boolean {
         return SessionManager.getUserId(context) != null
     }
 
-
+    // 사용자 데이터 가져오기
     private fun fetchUserData(userId: String?) {
         if (userId.isNullOrBlank()) {
             Toast.makeText(this, "유효하지 않은 사용자 ID", Toast.LENGTH_SHORT).show()
@@ -204,7 +206,7 @@ class makeCourseActivity : AppCompatActivity() {
         return true
     }
 
-
+    // 메뉴 항목 선택 처리
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item?.itemId){
             R.id.home -> {

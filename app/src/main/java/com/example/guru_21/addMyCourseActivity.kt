@@ -24,6 +24,7 @@ import java.io.ByteArrayOutputStream
 
 class addMyCourseActivity : AppCompatActivity() {
 
+    // 데이터베이스 및 UI 요소 변수 선언
     lateinit var dbManager: MyDatabaseHelper
     lateinit var sqlitedb: SQLiteDatabase
     lateinit var btnAddMyplace: Button
@@ -43,8 +44,8 @@ class addMyCourseActivity : AppCompatActivity() {
 
         // 로그인 상태 확인
         if (isLoggedIn(this)) {
-            setupViews()
-            handleGoogleInfo()
+            setupViews()    // UI 설정
+            handleGoogleInfo()//    구글 정보 처리
         } else {
             // 로그인되지 않은 경우
             Toast.makeText(this, "로그인 해주세요", Toast.LENGTH_SHORT).show()
@@ -55,6 +56,7 @@ class addMyCourseActivity : AppCompatActivity() {
         }
     }
 
+    // UI 요소 초기화 및 이벤트 설정
     private fun setupViews() {
         btnAddMyplace = findViewById(R.id.btnAddMyplace)
         btnfind = findViewById(R.id.btnfind)
@@ -73,6 +75,7 @@ class addMyCourseActivity : AppCompatActivity() {
         edtPlaceAddress.setText(receiveAddr)
         edtPlaceCall.setText(receiveNum)
 
+        // 데이터베이스 초기화
         dbManager = MyDatabaseHelper(this, "tripDB", null, 1)
 
         btnAddMyplace.setOnClickListener {
@@ -88,19 +91,20 @@ class addMyCourseActivity : AppCompatActivity() {
         binding.Btnpicture.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
-            activityResult.launch(intent)
+            activityResult.launch(intent)   // 이미지 선택 액티비티 실행
         }
     }
 
+    // 장소를 데이터베이스에 추가하는 함수
     private fun addPlaceToDatabase() {
         val strPlaceName = edtPlaceName.text.toString()
         val strPlaceAddress = edtPlaceAddress.text.toString()
         val strPlaceCall = edtPlaceCall.text.toString()
         val strPlaceCost = edtPlaceCost.text.toString()
         val strPlaceComment = edtPlaceComment.text.toString()
-        val bitmap = imageViewToBitmap(Imagepicture)
-        val byteArray = bitmapToByteArray(bitmap)
-        val id = SessionManager.getUserId(this)
+        val bitmap = imageViewToBitmap(Imagepicture)            // 이미지 뷰를 비트맵으로 변환
+        val byteArray = bitmapToByteArray(bitmap)               // 비트맵을 바이트 배열로 변환
+        val id = SessionManager.getUserId(this)          // 사용자 ID 가져오기
 
         sqlitedb = dbManager.writableDatabase
 //        sqlitedb.execSQL("INSERT INTO mycourse(placename, placeaddress, placecall, placecost, placecomment) VALUES (?, ?, ?, ?, ?)",
@@ -121,20 +125,23 @@ class addMyCourseActivity : AppCompatActivity() {
         sqlitedb.insert("mycourse", null, values)
         sqlitedb.close()
 
+        // 장소 추가 후, makeCourseActivity로 이동
         val intent = Intent(this, makeCourseActivity::class.java)
         intent.putExtra("intent_name", strPlaceName)
         startActivity(intent)
     }
 
+    // 로그인 상태 확인
     private fun isLoggedIn(context: Context): Boolean {
         return SessionManager.getUserId(context) != null
     }
 
-
+    // 구글 정보 처리 함수
     private fun handleGoogleInfo() {
         fetchUserData(SessionManager.getUserId(this))
     }
 
+    // 사용자 데이터 가져오기
     private fun fetchUserData(userId: String?) {
         if (userId.isNullOrBlank()) {
             Toast.makeText(this, "유효하지 않은 사용자 ID", Toast.LENGTH_SHORT).show()
@@ -147,6 +154,7 @@ class addMyCourseActivity : AppCompatActivity() {
         cursor.close()
     }
 
+    // 이미지 선택 결과 처리
     private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {

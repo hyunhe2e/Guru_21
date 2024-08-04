@@ -18,9 +18,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class myPlaceInfoActivity:AppCompatActivity() {
+    // 데이터베이스 헬퍼 및 데이터베이스 인스턴스
     lateinit var dbManager: MyDatabaseHelper
     lateinit var sqlitedb: SQLiteDatabase
 
+    // UI 요소
     lateinit var tvmyplaceName: TextView
     lateinit var tvmyplaceAddress: TextView
     lateinit var tvmyplaceCall: TextView
@@ -37,6 +39,7 @@ class myPlaceInfoActivity:AppCompatActivity() {
     var byteArray: ByteArray? = null
 
 
+    // ByteArray를 Bitmap으로 변환하는 메서드
     fun byteArrayToBitmap(byteArray: ByteArray?):Bitmap?{
         return try{
             if(byteArray!=null && byteArray.isNotEmpty()){
@@ -70,6 +73,7 @@ class myPlaceInfoActivity:AppCompatActivity() {
     private fun setupViews(){
         fetchUserData(SessionManager.getUserId(this))
 
+        // UI 요소 초기화
         tvmyplaceName = findViewById(R.id.edtplacename)
         tvmyplaceAddress = findViewById(R.id.edtplaceaddress)
         tvmyplaceCall = findViewById(R.id.edtplacecall)
@@ -77,7 +81,7 @@ class myPlaceInfoActivity:AppCompatActivity() {
         tvmyplaceComment = findViewById(R.id.edtplacecomment)
         imageView = findViewById(R.id.imageView)
 
-
+        // 인텐트에서 장소 이름을 가져옴
         var intent = intent
         str_placename = intent.getStringExtra("intent_name") ?: ""
 
@@ -91,6 +95,7 @@ class myPlaceInfoActivity:AppCompatActivity() {
                 null
             )
 
+            // 커서에서 장소 정보 읽기
             if (cursor.moveToNext()) {
                 str_placeaddress =
                     cursor.getString(cursor.getColumnIndex("placeaddress")).toString()
@@ -101,6 +106,7 @@ class myPlaceInfoActivity:AppCompatActivity() {
                 byteArray = cursor.getBlob(cursor.getColumnIndex("placeimage"))
             }
 
+            // 이미지가 있는 경우 Bitmap으로 변환하여 ImageView에 설정
             if (byteArray != null) {
                 var bitmap = byteArrayToBitmap(byteArray)
                 if (bitmap != null) {
@@ -136,10 +142,12 @@ class myPlaceInfoActivity:AppCompatActivity() {
 
     }
 
+    // 로그인 상태 확인
     private fun isLoggedIn(context: Context): Boolean {
         return SessionManager.getUserId(context) != null
     }
 
+    // 사용자 데이터 가져오기
     private fun fetchUserData(userId: String?) {
         if (userId.isNullOrBlank()) {
             Toast.makeText(this, "유효하지 않은 사용자 ID", Toast.LENGTH_SHORT).show()
@@ -152,12 +160,13 @@ class myPlaceInfoActivity:AppCompatActivity() {
         cursor.close()
     }
 
-
+    // 메뉴 생성
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_myplace_info, menu)
         return true
     }
 
+    // 메뉴 항목 선택 처리
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
 
@@ -174,6 +183,7 @@ class myPlaceInfoActivity:AppCompatActivity() {
                 sqlitedb.close()
                 dbManager.close()
 
+                // 삭제 후 makeCourseActivity로 이동
                 val intent = Intent(this, makeCourseActivity::class.java)
                 startActivity(intent)
                 return true

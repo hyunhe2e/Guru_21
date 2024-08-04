@@ -31,7 +31,7 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 
 class courseActivity : AppCompatActivity() {
-
+    // 데이터베이스 헬퍼와 데이터베이스 인스턴스
     lateinit var dbManager: MyDatabaseHelper
     lateinit var sqlitedb: SQLiteDatabase
 
@@ -176,11 +176,12 @@ class courseActivity : AppCompatActivity() {
             }
         }
 
+    // 로그인 상태 확인
     private fun isLoggedIn(context: Context): Boolean {
         return SessionManager.getUserId(context) != null
     }
 
-
+    // 사용자 데이터 가져오기
     private fun fetchUserData(userId: String?) {
         if (userId.isNullOrBlank()) {
             Toast.makeText(this, "유효하지 않은 사용자 ID", Toast.LENGTH_SHORT).show()

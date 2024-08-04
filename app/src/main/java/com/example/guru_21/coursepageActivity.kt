@@ -16,7 +16,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class coursepageActivity : AppCompatActivity() {
-
+    // UI 요소와 데이터베이스 관련 변수 선언
     private lateinit var mainLayout: LinearLayout
     private lateinit var postTitleEditText: EditText
     lateinit var dbManager: MyDatabaseHelper
@@ -28,14 +28,14 @@ class coursepageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coursepage)
 
+        // UI 요소 초기화
         mainLayout = findViewById(R.id.scroll_layout)
 
+        // Intent로 전달된 텍스트를 가져와서 EditText에 설정
         val inputText = intent.getStringExtra("inputText")
-
         if (inputText != null) {
             postTitleEditText.setText(inputText)
         }
-
         if (inputText != null) {
             postTitleEditText.setText(inputText)
         }
@@ -56,19 +56,24 @@ class coursepageActivity : AppCompatActivity() {
         }
     }
 
+    // UI 초기화 및 게시물 로딩
     private fun setupViews(){
         fetchUserData(SessionManager.getUserId(this))
 
         dbManager = MyDatabaseHelper(this, "review", null, 1)
         sqlitedb = dbManager.readableDatabase
+
         mainLayout = findViewById(R.id.scroll_layout)
-        loadPosts()
+
+        loadPosts()     // 게시물 로딩
     }
 
+    // 로그인 상태 확인
     private fun isLoggedIn(context: Context): Boolean {
         return SessionManager.getUserId(context) != null
     }
 
+    // 사용자 데이터 가져오기
     private fun fetchUserData(userId: String?) {
         if (userId.isNullOrBlank()) {
             Toast.makeText(this, "유효하지 않은 사용자 ID", Toast.LENGTH_SHORT).show()
@@ -81,7 +86,7 @@ class coursepageActivity : AppCompatActivity() {
         //cursor.close()
     }
 
-
+    // 데이터베이스에서 모든 게시물을 로드
     private fun loadPosts() {
         val cursor: Cursor = dbManager.getAllCourses()
 
@@ -91,30 +96,35 @@ class coursepageActivity : AppCompatActivity() {
                 val place = cursor.getString(cursor.getColumnIndex("title"))
                 val content = cursor.getString(cursor.getColumnIndex("content"))
 
-                val formatContent = "$place: $content"
+                val formatContent = "$place: $content"      // 내용 포맷팅
 
+                // 게시물 추가
                 addPost(place, formatContent)
-            } while (cursor.moveToNext())
+            } while (cursor.moveToNext())    // 다음 게시물로 이동
         }
         cursor.close()
     }
 
+    // 게시물을 레이아웃에 추가
     private fun addPost(title: String, content: String) {
         val inflater = LayoutInflater.from(this)
         val postView = inflater.inflate(R.layout.activity_coursepagepost, mainLayout, false)
 
+        // 게시물의 제목과 내용을 설정
         val postTitle = postView.findViewById<TextView>(R.id.post_title)
         val postContent = postView.findViewById<TextView>(R.id.post_content)
 
         postTitle.text = title
         postContent.text = content
 
+        // 게시물 클릭 시 상세보기 화면으로 이동
         postView.setOnClickListener {
             val intent = Intent(this, postdetailActivity::class.java)
             intent.putExtra("postTitle", title)
             startActivity(intent)
         }
 
+        // 레이아웃에 게시물 추가
         mainLayout.addView(postView)
     }
 

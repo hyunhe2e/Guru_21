@@ -41,16 +41,18 @@ class mypageActivity : AppCompatActivity() {
 
         managecourse = findViewById<Button>(R.id.manage_course)
 
-        managecourse.setOnClickListener()
-        {
+        managecourse.setOnClickListener() {
             var intent = Intent(this, makeCourseActivity::class.java)
             startActivity(intent)
         }
     }
+
+    // 로그인 상태 확인
     private fun isLoggedIn(context: Context): Boolean {
         return SessionManager.getUserId(context) != null
     }
 
+    // 사용자 데이터 가져오기
     private fun fetchUserData(userId: String?) {
         if (userId.isNullOrBlank()) {
             Toast.makeText(this, "유효하지 않은 사용자 ID", Toast.LENGTH_SHORT).show()
