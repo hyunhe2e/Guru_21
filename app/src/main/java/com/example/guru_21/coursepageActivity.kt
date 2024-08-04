@@ -5,6 +5,7 @@ import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -18,7 +19,6 @@ import androidx.core.view.WindowInsetsCompat
 class coursepageActivity : AppCompatActivity() {
     // UI 요소와 데이터베이스 관련 변수 선언
     private lateinit var mainLayout: LinearLayout
-    private lateinit var postTitleEditText: EditText
     lateinit var dbManager: MyDatabaseHelper
     lateinit var sqlitedb: SQLiteDatabase
 
@@ -33,14 +33,6 @@ class coursepageActivity : AppCompatActivity() {
 
         // Intent로 전달된 텍스트를 가져와서 EditText에 설정
         val inputText = intent.getStringExtra("inputText")
-        if (inputText != null) {
-            postTitleEditText.setText(inputText)
-        }
-        if (inputText != null) {
-            postTitleEditText.setText(inputText)
-        }
-
-        // 입력된 텍스트를 사용하여 새로운 게시물을 추가
         addPost(inputText ?: "", "")
 
         // 로그인 상태 확인
@@ -58,14 +50,16 @@ class coursepageActivity : AppCompatActivity() {
 
     // UI 초기화 및 게시물 로딩
     private fun setupViews(){
-        fetchUserData(SessionManager.getUserId(this))
+        try {
+            fetchUserData(SessionManager.getUserId(this))
 
-        dbManager = MyDatabaseHelper(this, "review", null, 1)
-        sqlitedb = dbManager.readableDatabase
+            dbManager = MyDatabaseHelper(this, "tripDB", null, 1)
+            sqlitedb = dbManager.readableDatabase
 
-        mainLayout = findViewById(R.id.scroll_layout)
-
-        loadPosts()     // 게시물 로딩
+            loadPosts()  // 게시물 로딩
+        } catch (e: Exception) {
+            Log.e("셋업에러췤", "Error during setup", e)
+        }
     }
 
     // 로그인 상태 확인
@@ -88,7 +82,7 @@ class coursepageActivity : AppCompatActivity() {
 
     // 데이터베이스에서 모든 게시물을 로드
     private fun loadPosts() {
-        val cursor: Cursor = dbManager.getAllCourses()
+        val cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM review;", null)
 
         if (cursor.moveToFirst()) {
             do {

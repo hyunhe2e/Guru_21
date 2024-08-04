@@ -35,6 +35,7 @@ class MyDatabaseHelper(
             db.execSQL("DROP TABLE IF EXISTS review")
             onCreate(db)
 
+
     }class MyDatabaseHelper(
         context: Context?,
         name: String?,
@@ -75,7 +76,7 @@ class MyDatabaseHelper(
         // ID에 따른 전체 코스 조회
         fun getAllCourses(userId: String): Cursor {
             val db = readableDatabase
-            return db.rawQuery("SELECT * FROM all_course WHERE userID = ?", arrayOf(userId))
+            return db.rawQuery("SELECT * FROM review WHERE userID = ?", arrayOf(userId))
         }
     }
     // ID에 따른 코스 조회
@@ -88,6 +89,6 @@ class MyDatabaseHelper(
     // 전체 코스 조회
     fun getAllCourses(): Cursor {
         val db = readableDatabase
-        return db.rawQuery("SELECT * FROM all_course", null)
+        return db.rawQuery("SELECT * FROM review", null)
     }
 }
