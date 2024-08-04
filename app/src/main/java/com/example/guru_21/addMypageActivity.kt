@@ -68,8 +68,8 @@ class addMypageActivity : AppCompatActivity() {
             sqlitedb.execSQL("INSERT INTO review(title, content) VALUES ('$title', '$content')")
             sqlitedb.close()
 
-            // 리뷰 저장 후, myPlaceInfoActivity로 이동
-            val intent = Intent(this, myPlaceInfoActivity::class.java)
+            // 리뷰 저장 후, makeCourseActivity로 이동
+            val intent = Intent(this, makeCourseActivity::class.java)
             startActivity(intent)
             finish()
         }
