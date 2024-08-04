@@ -63,7 +63,8 @@ class makeCourseActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
-            // 업로드 버튼(데이터 검증 및 업로드)
+            // 업로드 버튼(데이터 확인 및 업로드)
+            /*
             btnUpload.setOnClickListener{
                 val cursor = sqlitedb.rawQuery("SELECT title, content FROM review", null)
                 var validData = true
@@ -88,6 +89,9 @@ class makeCourseActivity : AppCompatActivity() {
                 }
 
             }
+
+
+             */
 
             // watch_review_button 클릭 시 후기 목록창으로 이동
             watch_review_button.setOnClickListener {

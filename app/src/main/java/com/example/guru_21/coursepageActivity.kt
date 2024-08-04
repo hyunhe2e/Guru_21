@@ -32,8 +32,8 @@ class coursepageActivity : AppCompatActivity() {
         mainLayout = findViewById(R.id.scroll_layout)
 
         // Intent로 전달된 텍스트를 가져와서 EditText에 설정
-        val inputText = intent.getStringExtra("inputText")
-        addPost(inputText ?: "", "")
+        //val inputText = intent.getStringExtra("inputText")
+        //addPost(inputText ?: "", "")
 
         // 로그인 상태 확인
         if (isLoggedIn(this)) {
@@ -111,11 +111,11 @@ class coursepageActivity : AppCompatActivity() {
         postContent.text = content
 
         // 게시물 클릭 시 상세보기 화면으로 이동
-        postView.setOnClickListener {
-            val intent = Intent(this, postdetailActivity::class.java)
-            intent.putExtra("postTitle", title)
-            startActivity(intent)
-        }
+        //postView.setOnClickListener {
+        //    val intent = Intent(this, postdetailActivity::class.java)
+        //   intent.putExtra("postTitle", title)
+        //    startActivity(intent)
+        //}
 
         // 레이아웃에 게시물 추가
         mainLayout.addView(postView)
