@@ -38,7 +38,7 @@ class signupActivity : AppCompatActivity() {
         btn1 = findViewById(R.id.btn1)
 
         // 데이터베이스 헬퍼 클래스 초기화
-        dbManager = MyDatabaseHelper(this, "tripDB.db", null, 1)
+        dbManager = MyDatabaseHelper(this, "tripDB", null, 1)
 
         // 버튼 클릭 리스너 설정
         btn1.setOnClickListener {

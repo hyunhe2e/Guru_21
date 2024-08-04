@@ -57,7 +57,7 @@ class detailMypageActivity : AppCompatActivity() {
             // 데이터베이스에서 제목에 해당하는 리뷰를 조회
             sqlitedb = dbHelper.readableDatabase
             val cursor: Cursor =
-                sqlitedb.rawQuery("SELECT * FROM review WHERE title = '$title' AND  userID = ?", arrayOf(SessionManager.getUserId(this)))
+                sqlitedb.rawQuery("SELECT * FROM review WHERE title = '$title'", null)
 
             // 조회된 데이터가 있으면 UI에 표시
             if (cursor.moveToFirst()) {
@@ -87,7 +87,7 @@ class detailMypageActivity : AppCompatActivity() {
             return
         }
 
-        val dbManager = MyDatabaseHelper(this, "tripDB.db", null, 1)
+        val dbManager = MyDatabaseHelper(this, "tripDB", null, 1)
         val cursor = dbManager.getUserCourses(userId)
 
         cursor.close()

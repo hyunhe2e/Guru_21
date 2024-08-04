@@ -31,7 +31,7 @@ class loginActivity : AppCompatActivity() {
         btn1 = findViewById(R.id.btn1)
 
         // 데이터베이스 매니저와 SQL 데이터베이스 초기화
-        dbManager = MyDatabaseHelper(this, "tripDB.db", null, 1)
+        dbManager = MyDatabaseHelper(this, "tripDB", null, 1)
         sqlDB = dbManager.writableDatabase
 
         // 로그인 버튼 클릭 시 실행되는 코드

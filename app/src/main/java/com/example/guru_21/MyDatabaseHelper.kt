@@ -14,7 +14,7 @@ class MyDatabaseHelper(
 
 
     override fun onCreate(db: SQLiteDatabase) {
-        //review
+        //reviewstat int, FOREIGN KEY(userID) REFERENCES Member(NAME))")
         db.execSQL("CREATE TABLE review(userID text, title text, content text, stat int, " + "FOREIGN KEY(userID) REFERENCES Member(NAME))")
 
         //addMyCourse, makeCourse, mypageInfo
@@ -24,7 +24,6 @@ class MyDatabaseHelper(
         db.execSQL("CREATE TABLE all_course(userID text, title text, content text, "+
                 "FOREIGN KEY(userID) REFERENCES Member(NAME))")
 
-
         //회원관리
         db.execSQL("CREATE TABLE Member (" +
                 "NAME text PRIMARY KEY, " +
@@ -32,41 +31,13 @@ class MyDatabaseHelper(
                 "EMAIL VARCHAR(30));")
     }
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-            db.execSQL("DROP TABLE IF EXISTS review")
-            onCreate(db)
+        db.execSQL("DROP TABLE IF EXISTS review")
+        db.execSQL("DROP TABLE IF EXISTS mycourse")
+        db.execSQL("DROP TABLE IF EXISTS all_course")
+        db.execSQL("DROP TABLE IF EXISTS Member")
+        onCreate(db)
 
 
-    }class MyDatabaseHelper(
-        context: Context?,
-        name: String?,
-        factory: SQLiteDatabase.CursorFactory?,
-        version: Int
-    ): SQLiteOpenHelper(context, name, factory, version) {
-
-
-        override fun onCreate(db: SQLiteDatabase) {
-            //mypage
-            db.execSQL("CREATE TABLE travel_diary(userID text, title text, content text, " + "FOREIGN KEY(userID) REFERENCES Member(NAME))")
-            //review
-            db.execSQL("CREATE TABLE review(userID text, title text, content text, stat int, " + "FOREIGN KEY(userID) REFERENCES Member(NAME))")
-
-            //addMyCourse, makeCourse, mypageInfo
-            db.execSQL("CREATE TABLE  mycourse(userID text, courseID text, placename text, placeaddress text, placecall text, placecost INTEGER, placecomment text, placeimage blob,  review text, "
-                    + "FOREIGN KEY(userID) REFERENCES Member(NAME))")
-
-            // course_page
-            db.execSQL("CREATE TABLE all_course(userID text, title text, content text, " +
-                    "FOREIGN KEY(userID) REFERENCES Member(NAME))")
-
-
-            //회원관리
-            db.execSQL("CREATE TABLE Member (" +
-                    "NAME text PRIMARY KEY, " +
-                    "PWD VARCHAR(15), " +
-                    "EMAIL VARCHAR(30));")
-        }
-        override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        }
         // ID에 따른 코스 조회
         fun getUserCourses(userId: String): Cursor {
             val db = readableDatabase

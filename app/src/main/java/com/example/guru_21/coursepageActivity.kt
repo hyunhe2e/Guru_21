@@ -86,7 +86,6 @@ class coursepageActivity : AppCompatActivity() {
 
         if (cursor.moveToFirst()) {
             do {
-
                 val place = cursor.getString(cursor.getColumnIndex("title"))
                 val content = cursor.getString(cursor.getColumnIndex("content"))
 

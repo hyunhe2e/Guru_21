@@ -45,7 +45,7 @@ class postdetailActivity : AppCompatActivity() {
         val cursor = sqlitedb.rawQuery("""
             SELECT  mycourse.userID,  mycourse.placename,  mycourse.placeaddress,  mycourse.placecall,  mycourse.placecost
             FROM mycourse
-            INNER JOIN review ON review.placename = review.title
+            INNER JOIN review ON mycourse.placename = review.title
             WHERE review.title = ?
         """, arrayOf(title))
 

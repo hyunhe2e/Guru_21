@@ -194,7 +194,7 @@ class makeCourseActivity : AppCompatActivity() {
             return
         }
 
-        val dbManager = MyDatabaseHelper(this, "tripDB.db", null, 1)
+        val dbManager = MyDatabaseHelper(this, "tripDB", null, 1)
         val cursor = dbManager.getUserCourses(userId)
 
         cursor.close()
